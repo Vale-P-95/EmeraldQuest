@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/danza_del_vento.tres" id="s_danza_del_vento"]
+[ext_resource type="Resource" path="res://data/skills/lama_d_aria.tres" id="s_lama_d_aria"]
+[ext_resource type="Resource" path="res://data/skills/soffio.tres" id="s_soffio"]
+[ext_resource type="Resource" path="res://data/skills/spallata.tres" id="s_spallata"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"saltarupe"
+display_name = "Saltarupe"
+description = "Peloso erbivoro delle praterie: pascola sui crinali e, se spaventato, carica a testa bassa."
+types = Array[int]([5])
+hp = 55
+attack = 65
+defense = 45
+magic = 50
+spirit = 50
+speed = 75
+growth = "media"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_spallata"),
+2: ExtResource("s_soffio"),
+8: ExtResource("s_lama_d_aria"),
+14: ExtResource("s_danza_del_vento")
+})
+catch_rate = 190
+field_skill = &""
+drops = Dictionary[StringName, float]({
+&"ciuffo_di_saltarupe": 0.6
+})

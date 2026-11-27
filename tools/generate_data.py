@@ -104,7 +104,19 @@ C = [
  ("fulgurala","Fulgurala",["volt","vento"],(70,70,60,100,75,110),"veloce",60,
   [(1,"arco_voltaico"),(2,"lama_d_aria"),(24,"danza_del_vento"),(32,"tuono_a_catena")],[],
   "Vola veloce come il lampo e precede i temporali.","accendere_lampioni"),
+ # --- Creature selvatiche della storia (capitolo 1), senza evoluzioni ---
+ ("ciottolotto","Ciottolotto",["terra"],(55,60,70,35,45,30),"media",190,
+  [(1,"spallata"),(2,"sassata"),(10,"frana"),(15,"scudo_di_pietra")],[],
+  "Un tondo roditore di roccia che rosicchia il muschio e spacca i sassi coi denti.","spaccare_rocce"),
+ ("saltarupe","Saltarupe",["vento"],(55,65,45,50,50,75),"media",190,
+  [(1,"spallata"),(2,"soffio"),(8,"lama_d_aria"),(14,"danza_del_vento")],[],
+  "Peloso erbivoro delle praterie: pascola sui crinali e, se spaventato, carica a testa bassa.","",
+ ),
 ]
+# Materiali lasciati (nome -> probabilità 0-1), solo per chi serve alle missioni
+DROPS = {
+ "saltarupe": 'drops = Dictionary[StringName, float]({\n&"ciuffo_di_saltarupe": 0.6\n})\n',
+}
 COND = {"LIVELLO":0,"OGGETTO":1,"LUOGO":2,"ORA_DEL_GIORNO":3,"AMICIZIA":4,"REPUTAZIONE":5}
 for c in C:
     for _,s in c[6]: assert s in SK, s
@@ -166,6 +178,7 @@ for (i,n,tp,st,gr,cr,ls,evs,ds,fs) in C:
         subs.append(t); names.append(f'SubResource("Rule_{k}")')
     lsx = ",\n".join(f'{l}: ExtResource("s_{s}")' for l,s in ls)
     types = ", ".join(str(E[x]) for x in tp)
+    drops = DROPS.get(i, "")
     parts = "\n".join(ext)+"\n\n"+("\n".join(subs)+"\n" if subs else "")
     ev = f'evolutions = Array[ExtResource("2_rule")]([{", ".join(names)}])\n' if names else ""
     w(f"data/creatures/{i}.tres", f'''[gd_resource type="Resource" script_class="CreatureData" format=3]
@@ -188,5 +201,5 @@ learnset = Dictionary[int, Resource]({{
 }})
 {ev}catch_rate = {cr}
 field_skill = &"{fs}"
-''')
+{drops}''')
 print(len(SKILLS),"abilità,",len(C),"creature")
