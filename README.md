@@ -43,3 +43,10 @@ tasto destro su `data/creatures/` > **Nuovo > Risorsa** > `CreatureData`.
 
 - Tutti i contenuti sono originali o con licenza CC0: niente nomi, creature o asset di altri giochi.
 - Il codice è commentato in italiano.
+
+## Creature, abilità e tipi (M2)
+
+- `data/creatures/` — 12 creature originali (4 linee evolutive, con evoluzioni a rami).
+- `data/skills/` — 30 abilità.
+- `data/types/type_chart.tres` — tabella dei 9 elementi (forte/debole/immune).
+- `tools/generate_data.py` — genera tutti questi `.tres` da una tabella leggibile; in alternativa modifica i `.tres` dall'Inspector.

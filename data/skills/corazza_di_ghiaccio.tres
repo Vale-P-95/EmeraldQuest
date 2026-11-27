@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+id = &"corazza_di_ghiaccio"
+display_name = "Corazza di Ghiaccio"
+description = "Si copre di ghiaccio: difesa +2."
+element = 6
+category = 2
+power = 0
+accuracy = 100
+ap_cost = 1
+status_effect = &"difesa_su"
+status_chance = 100

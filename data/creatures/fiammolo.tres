@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/braciere.tres" id="s_braciere"]
+[ext_resource type="Resource" path="res://data/skills/soffio.tres" id="s_soffio"]
+[ext_resource type="Resource" path="res://data/skills/spallata.tres" id="s_spallata"]
+[ext_resource type="Resource" path="res://data/skills/zanna_ardente.tres" id="s_zanna_ardente"]
+[ext_resource type="Resource" path="res://data/creatures/ardolupo.tres" id="c_ardolupo"]
+
+[sub_resource type="Resource" id="Rule_1"]
+script = ExtResource("2_rule")
+evolves_into = ExtResource("c_ardolupo")
+condition = 0
+min_level = 14
+
+[resource]
+script = ExtResource("1_creature")
+id = &"fiammolo"
+display_name = "Fiammolo"
+description = "Un cucciolo di lupo con la coda in fiamme. La fiamma si spegne se è triste."
+types = Array[int]([0])
+hp = 45
+attack = 52
+defense = 43
+magic = 60
+spirit = 50
+speed = 65
+growth = "media"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_spallata"),
+2: ExtResource("s_braciere"),
+7: ExtResource("s_soffio"),
+12: ExtResource("s_zanna_ardente")
+})
+evolutions = Array[ExtResource("2_rule")]([SubResource("Rule_1")])
+catch_rate = 190
+field_skill = &"bruciare_rovi"

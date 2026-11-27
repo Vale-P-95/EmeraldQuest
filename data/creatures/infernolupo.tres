@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/artiglio_notturno.tres" id="s_artiglio_notturno"]
+[ext_resource type="Resource" path="res://data/skills/eruzione.tres" id="s_eruzione"]
+[ext_resource type="Resource" path="res://data/skills/lanciafiamme.tres" id="s_lanciafiamme"]
+[ext_resource type="Resource" path="res://data/skills/morso_ombra.tres" id="s_morso_ombra"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"infernolupo"
+display_name = "Infernolupo"
+description = "Un lupo nero dagli occhi ardenti, cacciatore delle notti d'estate."
+types = Array[int]([0, 8])
+hp = 85
+attack = 100
+defense = 75
+magic = 100
+spirit = 75
+speed = 95
+growth = "lenta"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_lanciafiamme"),
+2: ExtResource("s_morso_ombra"),
+34: ExtResource("s_artiglio_notturno"),
+42: ExtResource("s_eruzione")
+})
+catch_rate = 45
+field_skill = &"bruciare_rovi"

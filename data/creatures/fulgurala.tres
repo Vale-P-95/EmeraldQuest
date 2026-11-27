@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/arco_voltaico.tres" id="s_arco_voltaico"]
+[ext_resource type="Resource" path="res://data/skills/danza_del_vento.tres" id="s_danza_del_vento"]
+[ext_resource type="Resource" path="res://data/skills/lama_d_aria.tres" id="s_lama_d_aria"]
+[ext_resource type="Resource" path="res://data/skills/tuono_a_catena.tres" id="s_tuono_a_catena"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"fulgurala"
+display_name = "Fulgurala"
+description = "Vola veloce come il lampo e precede i temporali."
+types = Array[int]([3, 5])
+hp = 70
+attack = 70
+defense = 60
+magic = 100
+spirit = 75
+speed = 110
+growth = "veloce"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_arco_voltaico"),
+2: ExtResource("s_lama_d_aria"),
+24: ExtResource("s_danza_del_vento"),
+32: ExtResource("s_tuono_a_catena")
+})
+catch_rate = 60
+field_skill = &"accendere_lampioni"

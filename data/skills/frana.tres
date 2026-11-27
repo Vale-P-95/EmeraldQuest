@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+id = &"frana"
+display_name = "Frana"
+description = "Fa crollare massi sul nemico."
+element = 4
+category = 0
+power = 85
+accuracy = 90
+ap_cost = 3
+status_effect = &"tentennamento"
+status_chance = 20
