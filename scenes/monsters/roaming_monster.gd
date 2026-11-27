@@ -6,7 +6,7 @@ extends CharacterBody3D
 ##   WANDER -> cammina verso un punto a caso vicino alla sua "tana"
 ##   ALERT  -> il giocatore è vicino: si gira verso di lui e parte l'incontro
 ##
-## In M2 il segnale `encounter_started` farà partire la battaglia a turni.
+## Il segnale `encounter_started` fa partire la battaglia a turni (vedi test_world.gd).
 
 ## Emesso quando il giocatore entra nel raggio di avvistamento.
 signal encounter_started(monster: Node3D)
@@ -14,6 +14,8 @@ signal encounter_started(monster: Node3D)
 signal encounter_ended(monster: Node3D)
 
 @export var display_name := "Fauceverde"   ## nome mostrato a schermo
+@export var creature: CreatureData         ## la specie con cui si lotta (data/creatures/)
+@export_range(1, 100) var level := 10      ## livello in battaglia
 @export var wander_radius := 12.0          ## quanto si allontana dalla tana (m)
 @export var move_speed := 2.5              ## velocità camminando (m/s)
 @export var idle_time_min := 1.5           ## secondi minimi da fermo
@@ -106,3 +108,13 @@ func _on_body_exited(body: Node3D) -> void:
 		_player = null
 		_enter_idle()
 		encounter_ended.emit(self)
+
+
+## Chiamata quando il giocatore lo sconfigge: sparisce dalla mappa.
+## (Più avanti qui lascerà cadere i materiali e tornerà dopo un po' di tempo.)
+func defeat() -> void:
+	_detection.monitoring = false
+	set_physics_process(false)
+	var tw := create_tween()
+	tw.tween_property(self, "scale", Vector3.ONE * 0.01, 0.6)
+	tw.tween_callback(queue_free)

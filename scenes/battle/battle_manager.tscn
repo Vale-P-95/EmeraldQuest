@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/battle/battle_manager.gd" id="1_manager"]
+[ext_resource type="Script" path="res://scenes/battle/battle_ui.gd" id="2_ui"]
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="7_creature_data"]
+[ext_resource type="Resource" path="res://data/creatures/coralunghi.tres" id="8_coralunghi"]
+[ext_resource type="Resource" path="res://data/creatures/fiammolo.tres" id="3_fiammolo"]
+[ext_resource type="Resource" path="res://data/creatures/gocciolo.tres" id="4_gocciolo"]
+[ext_resource type="Resource" path="res://data/creatures/germoglio.tres" id="5_germoglio"]
+[ext_resource type="Resource" path="res://data/creatures/scintilla.tres" id="6_scintilla"]
+
+[node name="BattleManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_manager")
+starting_party = Array[ExtResource("7_creature_data")]([ExtResource("3_fiammolo"), ExtResource("4_gocciolo"), ExtResource("5_germoglio"), ExtResource("6_scintilla"), ExtResource("8_coralunghi")])
+starting_level = 14
+
+[node name="BattleUI" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("2_ui")
