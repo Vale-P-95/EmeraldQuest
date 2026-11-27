@@ -20,7 +20,7 @@ elif {Rep.Villaggi} >= 10:
 elif {Rep.Villaggi} <= -10:
 	tano: La Gilda, la Gilda. Una volta qui decideva chi tirava le reti.
 else:
-	tano: Due ceste in sei barche. Se continua così, mi metto a pescare sulla Prateria.
+	tano: Due ceste in sei barche, e cenere del Nonno fin dentro le reti. Se continua così, mi metto a pescare sulla Prateria.
 [end_timeline]
 
 label nilde
@@ -28,6 +28,7 @@ if {Cap1.FauceEsito} == "abbattuta":
 	nilde: Il pane gliel'ho portato lo stesso. L'ho lasciato davanti alla Grotta. Qualcuno lo mangerà.
 elif {Cap1.FauceEsito} == "placata":
 	nilde: Ha mangiato tutto il pane e poi mi ha annusato il fazzoletto, come quando avevo sei anni. Si ricorda. Alla sua età!
+	nilde: E i bagni caldi hanno riaperto. L'acqua è tornata limpida. Vai a metterci i piedi, che te lo sei meritato.
 elif {Cap1.Cantilena} == true:
 	nilde: Tre note che salgono, una che scende. Non correre sulla terza. La Vecchia ha pazienza, ma è intonata.
 else:

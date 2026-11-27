@@ -111,7 +111,8 @@ jump chiusura
 
 label chiusura
 Dalla finestra della Gilda si vede tutto il porto. Le barche escono in fila, con le vele piene, e sopra la Prateria le pale dei mulini girano.
-Il vento è tornato a Portofoglia. Ma viene da ponente, e a ponente il cielo, proprio sul filo dell'orizzonte, ha una sfumatura verde.
+Il vento è tornato a Portofoglia. Il Nonno fuma dritto, e la sua cenere finalmente va al largo.
+Ma il vento viene da ponente, e a ponente il cielo, proprio sul filo dell'orizzonte, ha una sfumatura verde.
 [signal arg="missione_fine:c1_m4:completata"]
 [signal arg="capitolo_fine:1"]
 [end_timeline]

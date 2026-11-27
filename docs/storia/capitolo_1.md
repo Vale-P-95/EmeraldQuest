@@ -50,11 +50,22 @@ la variabile `{Giocatore.Nome}`.
 
 ## Luoghi
 
-- **Portofoglia**: villaggio costiero di case bianche. Molo, piazza, sede della Gilda
+L'arcipelago di Verdalia prende ispirazione dalla geografia reale del Kyushu, la
+grande isola del sud del Giappone: vulcani attivi, altopiani erbosi dentro antiche
+caldere, gole di basalto, foreste di cedri coperte di muschio, sorgenti calde, coste
+subtropicali e terrazze di tè. Sono solo paesaggi: trama, personaggi, fazioni e
+creature sono originali.
+
+- **Portofoglia**: villaggio di pescatori dai tetti di tegole scure, tra alberi di
+  canfora e terrazze di tè. Oltre la baia fuma un vulcano che tutti chiamano
+  **il Nonno**: quando il maestrale manca, la sua cenere ricade sul paese. Più a
+  valle ci sono i bagni caldi. Molo, piazza, sede della Gilda
   (una vecchia rimessa delle barche), fucina di Ferro, molo vecchio (di notte).
-- **Prateria dei Venti**: altopiano d'erba alta con i mulini. Branchi di Saltarupe,
+- **Prateria dei Venti**: il fondo erboso di una caldera antichissima, chiuso
+  dall'orlo del cratere, con i mulini. Branchi di Saltarupe,
   il mulino di Pina, il sentiero del nord.
-- **Grotta Muschiata**: dungeon del capitolo. Muschio azzurro luminoso che il
+- **Grotta Muschiata**: dungeon del capitolo, in fondo a una gola di colonne di
+  basalto e cedri secolari. Dentro scorre acqua calda. Muschio azzurro luminoso che il
   frammento sta trasformando in muschio nero. Sala delle radici, nicchia laterale,
   lago sotterraneo, tana di Fauceverde.
 

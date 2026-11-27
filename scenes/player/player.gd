@@ -41,6 +41,9 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Durante un dialogo il mouse serve per le risposte: la camera non lo usa.
+	if Storia.dialogo_attivo:
+		return
 	# Click nella finestra: il mouse viene catturato e controlla la camera.
 	if event is InputEventMouseButton and event.pressed:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -53,6 +56,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# Durante un dialogo il protagonista resta fermo ("Storia" è in autoload/storia.gd).
+	if Storia.dialogo_attivo:
+		return
 	# 1) Camera con stick destro o frecce.
 	var look := Input.get_vector("camera_left", "camera_right", "camera_up", "camera_down")
 	if look != Vector2.ZERO:

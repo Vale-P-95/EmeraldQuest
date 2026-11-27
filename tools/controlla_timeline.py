@@ -15,7 +15,8 @@ Che cosa controlla:
   5. nessuna riga di narrazione viene scambiata per un comando
      (per esempio una frase che comincia con "set" o "Nota:");
   6. i rientri sono fatti con il TAB e non saltano livelli;
-  7. le missioni citate nei segnali esistono in data/quests/capitolo_1.json.
+  7. le missioni citate nei segnali esistono in data/quests/capitolo_1.json;
+  8. timeline e personaggi sono registrati in project.godot.
 
 Se è tutto a posto stampa un riepilogo ed esce con codice 0,
 altrimenti elenca i problemi ed esce con codice 1.
@@ -250,6 +251,16 @@ def main() -> int:
         for riga in percorso.read_text(encoding="utf-8").split("\n"):
             if not riga.strip().startswith("#"):
                 usate.update(RE_VARIABILE.findall(riga))
+
+    # 8. Dialogic trova timeline e personaggi tramite un elenco in project.godot.
+    progetto = (RADICE / "project.godot")
+    if progetto.exists():
+        testo_progetto = progetto.read_text(encoding="utf-8")
+        for percorso in timeline + sorted(CARTELLA_PERSONAGGI.glob("*.dch")):
+            indirizzo = "res://" + percorso.relative_to(RADICE).as_posix()
+            if indirizzo not in testo_progetto:
+                problemi.append(f"{percorso.relative_to(RADICE)}: non è registrato in project.godot "
+                                "(apri il progetto nell'editor di Godot e salvalo: Dialogic lo aggiunge da solo)")
 
     for inutilizzata in sorted(variabili - usate):
         print(f"nota: la variabile {inutilizzata} è definita ma nessuna timeline la usa")

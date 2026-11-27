@@ -9,37 +9,39 @@ di Godot per dialoghi e scelte.
 | `dialogic/timelines/cap1/` | I dialoghi del capitolo 1, un file `.dtl` per scena |
 | `data/quests/capitolo_1.json` | L'elenco delle missioni con obiettivi, finali e ricompense |
 | `docs/storia/capitolo_1.md` | La storia raccontata per esteso, con tutte le diramazioni |
-| `tools/installa_variabili_storia.gd` | Crea le variabili di Dialogic in un colpo solo |
+| `autoload/storia.gd` | Collega i dialoghi al gioco: missioni, borsa, reputazione |
+| `addons/dialogic/` | Il plugin Dialogic 2 (licenza MIT), da non modificare |
+| `tools/installa_variabili_storia.gd` | Aggiunge variabili nuove a Dialogic |
 | `tools/controlla_timeline.py` | Controlla che i dialoghi non contengano errori |
 
-> **Stato**: i testi sono completi e controllati con `tools/controlla_timeline.py`,
-> che segue le regole di lettura di Dialogic 2. Non sono ancora stati provati dentro
-> Godot, perché il plugin va prima installato nel progetto (passi qui sotto).
+> **Stato**: Dialogic 2 (versione 2.0-alpha-20, per Godot 4.5) è già installato in
+> `addons/dialogic/`, con variabili, personaggi e timeline già registrati in
+> `project.godot`. Non devi installare niente.
 
-## 1. Installare Dialogic (una volta sola)
+## 1. Provare la storia nel gioco
 
-1. Apri il progetto in Godot e clicca la scheda **AssetLib** in alto.
-2. Cerca **Dialogic** e scarica **Dialogic 2**. Conferma l'installazione: compare la
-   cartella `addons/dialogic/`.
-3. Vai in **Progetto > Impostazioni del progetto > Plugin** e spunta **Dialogic**.
-4. Riavvia Godot quando te lo chiede. In alto compare la scheda **Dialogic**.
+Avvia il gioco con **F5** e premi il tasto **T**: parte la prima scena del
+capitolo 1. Ogni volta che premi di nuovo T, a dialogo finito, parte la scena
+successiva della trama.
 
-Il progetto usa Godot 4.5: scegli una versione di Dialogic 2 che lo supporti
-(quella più recente va bene).
+- Si avanza con **Invio**, **Spazio**, **X**, il clic del mouse o il tasto A del controller.
+- Le risposte si scelgono con il mouse.
+- Mentre si parla il protagonista resta fermo.
+- Le lotte non esistono ancora: quando un dialogo ne chiede una, viene data per vinta.
 
-## 2. Creare le variabili (una volta sola)
+Chi gestisce tutto questo è lo script `autoload/storia.gd`, che è commentato riga
+per riga. Tiene anche missioni, borsa, monete e squadra in forma molto semplice,
+in attesa dei sistemi veri.
 
-I dialoghi usano una quarantina di variabili: reputazione, scelte fatte, stato
-delle missioni. Per non crearle a mano:
+## 2. Aggiungere variabili nuove
 
-1. Nel pannello FileSystem apri `tools/installa_variabili_storia.gd`.
-2. Nell'editor degli script scegli **File > Esegui** (Ctrl+Maiusc+X).
-3. Nel pannello **Output** compare "Ho aggiunto 46 variabili a Dialogic".
-4. Riavvia Godot. Le trovi in **Dialogic > Variabili**.
+Le 46 variabili del capitolo 1 ci sono già: le vedi in **Dialogic > Variabili**.
+Se scrivi dialoghi nuovi e te ne servono altre, puoi crearle da lì oppure
+aggiungerle all'elenco in `tools/installa_variabili_storia.gd` e poi eseguire lo
+script con **File > Esegui** (Ctrl+Maiusc+X) nell'editor degli script. Lo script
+aggiunge solo quelle che mancano.
 
-Lo script aggiunge solo quelle che mancano, quindi si può rieseguire senza rischi.
-
-## 3. Provare un dialogo
+## 3. Provare un singolo dialogo
 
 Nella scheda **Dialogic** apri una timeline (per esempio `c1_01_prologo`) e premi
 il pulsante **Play** della timeline nella barra di Dialogic. Si apre una finestra con il
@@ -49,11 +51,14 @@ Da codice, un dialogo si avvia così:
 
 ```gdscript
 # Avvia la scena iniziale.
-Dialogic.start("c1_01_prologo")
+Storia.avvia("c1_01_prologo")
 
 # Avvia una timeline da un punto preciso (una "label").
-Dialogic.start("c1_s1_mulino", "nido")
+Storia.avvia("c1_s1_mulino", "nido")
 ```
+
+Per esempio, un NPC può chiamare `Storia.avvia(...)` quando il protagonista gli
+si avvicina e preme il tasto di interazione.
 
 ## 4. Come leggere un file .dtl
 
@@ -124,10 +129,13 @@ Queste non le cambia il dialogo: le imposta il codice prima di avviare la scena.
 | `Cap1.HaFocaccia` | In borsa c'è una Focaccia di semi |
 | `Cap1.FauceRotta` | Nella lotta con Fauceverde la barra di Rottura è stata svuotata almeno una volta |
 
+Le prime tre le aggiorna già `autoload/storia.gd`, guardando nella borsa prima di
+ogni dialogo. L'ultima toccherà al sistema di battaglia.
+
 ```gdscript
-# Leggere e scrivere una variabile di Dialogic dal codice.
-Dialogic.VAR.set_variable("Cap1.FauceRotta", true)
-var reputazione_gilda: int = Dialogic.VAR.get_variable("Rep.Gilda")
+# Leggere e scrivere una variabile dei dialoghi dal codice.
+Storia.imposta_variabile("Cap1.FauceRotta", true)
+var reputazione_gilda: int = Storia.reputazione("Gilda")
 ```
 
 Finché il sistema di battaglia non esiste, per provare il finale "placata" basta
@@ -161,31 +169,28 @@ qualcosa. Il testo è sempre `tipo:dettaglio` oppure `tipo:dettaglio:quantità`.
 | `diario:<voce>` | Aggiungi una voce al diario |
 | `capitolo_fine:<n>` | Il capitolo è finito |
 
-Per riceverli, uno script collega il segnale di Dialogic a una sua funzione:
+Li riceve la funzione `_su_segnale` di `autoload/storia.gd`. Per gestire un segnale
+nuovo basta aggiungere un caso al suo `match`:
 
 ```gdscript
-func _ready() -> void:
-	# Ogni volta che una timeline incontra [signal arg="..."], Dialogic chiama _su_segnale.
-	Dialogic.signal_event.connect(_su_segnale)
-
-func _su_segnale(argomento: String) -> void:
-	# "oggetto:cristallo_cattura:5" diventa ["oggetto", "cristallo_cattura", "5"].
-	var parti: PackedStringArray = argomento.split(":")
-	match parti[0]:
-		"oggetto":
-			print("Aggiungo ", parti[2], " x ", parti[1])
-		"missione_inizio":
-			print("Nuova missione: ", parti[1])
+match tipo:
+	"monete":
+		monete += int(dettaglio)
 ```
+
+I segnali che non hanno ancora un sistema dietro (`alleato`, `negozio`,
+`boss_modifica`, `rivale_compagno`, `abilita_campo_usata`, `capitolo_fine`)
+vengono solo scritti nel pannello Output.
 
 ### Lotte in mezzo a un dialogo
 
 In tre punti (`c1_s1_mulino` due volte, `c1_s2_odo` una) il segnale `battaglia:`
-arriva a metà scena, e il testo dopo racconta la vittoria. Quando lo riceve, il
-gioco deve mettere in pausa il dialogo e riprenderlo a lotta vinta:
+arriva a metà scena, e il testo dopo racconta la vittoria. Per ora la lotta è data
+per vinta. Quando ci sarà il sistema di battaglia, dovrà ascoltare il segnale
+`Storia.battaglia_richiesta`, mettere in pausa il dialogo e riprenderlo a lotta vinta:
 
 ```gdscript
-Dialogic.paused = true    # quando arriva il segnale "battaglia:..."
+Dialogic.paused = true    # quando arriva Storia.battaglia_richiesta
 Dialogic.paused = false   # quando la lotta è vinta
 ```
 

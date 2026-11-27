@@ -5,7 +5,8 @@
 # del compagno iniziale, quindi la scena cambia in base a Cap1.Starter.
 # ============================================================
 
-Il sentiero del nord finisce contro la montagna. Dove c'era l'imbocco della Grotta adesso c'è un muro di muschio nero, intrecciato a rovi grossi come un polso.
+Il sentiero del nord scende in una gola di colonne di basalto, tra cedri così vecchi che il muschio li ha vestiti fino in cima. In fondo scorre un torrente che fuma leggermente, perché nasce caldo.
+La gola finisce contro la montagna. Dove c'era l'imbocco della Grotta adesso c'è un muro di muschio nero, intrecciato a rovi grossi come un polso.
 Dall'interno esce un soffio lento, caldo. Ogni volta che arriva, nell'aria danza un pulviscolo verde.
 brisa: Respira. La montagna respira. Dimmi che lo vedi anche tu.
 brisa: Va bene. Come entriamo?
@@ -21,7 +22,7 @@ if {Cap1.Starter} == "brasolo":
 elif {Cap1.Starter} == "gocciarpa":
 	Il tuo {Cap1.StarterNome} ignora i rovi e trotterella verso il torrente che esce dalla roccia, più in basso. Si tuffa, riemerge, ti chiama con un trillo.
 	- (Lo segui in acqua, a nuoto, dentro la montagna.)
-		L'acqua è gelida e sa di ferro. Il torrente passa sotto il muro di rovi e vi porta dentro, in una sala bassa piena di echi.
+		L'acqua è tiepida e sa di ferro. Il torrente passa sotto il muro di rovi e vi porta dentro, in una sala bassa piena di echi e di vapore.
 	- (Fai segno a Brisa di aggrapparsi a te, poi vi tuffate.)
 		brisa: Io nuoto benissimo, sai? Ma grazie.
 		Il torrente passa sotto il muro di rovi e vi porta dentro, in una sala bassa piena di echi.

@@ -13,7 +13,8 @@
 
 Tre mesi fa, in una notte sola, il cielo di Verdalia è diventato verde.
 La chiamano la Notte Verde. Da allora il vento soffia storto, e le creature più miti mostrano i denti.
-A Portofoglia, però, stamattina si pensa ad altro. Oggi è il giorno del cristallo.
+A Portofoglia, però, stamattina si pensa ad altro. Oltre la baia il vulcano fuma tranquillo, come ogni giorno. Qui lo chiamano il Nonno, e la sua cenere si spazza dai davanzali insieme alla salsedine.
+Oggi è il giorno del cristallo.
 [signal arg="missione_inizio:c1_m1"]
 
 brisa: Sveglia, {Giocatore.Nome}! Se arriviamo dopo la campana, Ilva ci fa lucidare le gabbie fino all'inverno.
@@ -27,7 +28,7 @@ brisa: Oggi ci affidano il primo compagno. Il PRIMO. Come fai ad avere quella fa
 - (Sbadigli. È ancora presto.)
 	brisa: Incredibile. Il giorno più importante dell'anno, e tu sbadigli.
 
-Il sentiero scende tra le case bianche fino al porto. Le vele sono ancora ammainate, e l'aria sa di sale e di pane.
+Il sentiero scende fino al porto tra le case dai tetti di tegole scure, all'ombra dei grandi alberi di canfora. Le vele sono ancora ammainate, e l'aria sa di sale e di patate dolci arrostite.
 La sede della Gilda dei Cacciatori è la vecchia rimessa delle barche. Sopra il portone, incisa nel legno, la regola.
 Si caccia ciò che minaccia. Si protegge ciò che resta.
 
