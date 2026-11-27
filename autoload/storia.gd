@@ -66,6 +66,7 @@ var _mouse_prima: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 
 
 func _ready() -> void:
+	_registra_dialoghi()
 	# Colleghiamo i segnali di Dialogic alle nostre funzioni.
 	Dialogic.signal_event.connect(_su_segnale)
 	Dialogic.timeline_ended.connect(_su_dialogo_finito)
@@ -73,6 +74,21 @@ func _ready() -> void:
 	# Usato solo dal controllo automatico su GitHub: vedi _prova_dialoghi().
 	if "--prova-dialoghi" in OS.get_cmdline_user_args():
 		_prova_dialoghi.call_deferred()
+
+
+## Dice a Dialogic dove sono i file dei dialoghi e dei personaggi.
+##
+## Dialogic tiene un elenco "nome -> file" nelle impostazioni del progetto e lo
+## aggiorna quando si usa il suo editor. Qui lo completiamo a ogni avvio guardando
+## nella cartella res://dialogic, così un file nuovo funziona subito anche se
+## l'elenco non è aggiornato. Il nome di un dialogo è il nome del file senza estensione.
+func _registra_dialoghi() -> void:
+	for estensione: String in ["dch", "dtl"]:
+		var elenco: Dictionary = DialogicResourceUtil.get_directory(estensione)
+		for percorso: String in DialogicResourceUtil.scan_folder("res://dialogic", "." + estensione):
+			if not elenco.values().has(percorso):
+				elenco = DialogicResourceUtil.add_resource_to_directory(percorso, elenco)
+		DialogicResourceUtil.set_directory(estensione, elenco)
 
 
 func _unhandled_input(event: InputEvent) -> void:
