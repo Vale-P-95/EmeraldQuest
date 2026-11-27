@@ -1,0 +1,163 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/world/test_world.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/monsters/roaming_monster.tscn" id="3_monster"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+sky_top_color = Color(0.3, 0.55, 0.9, 1)
+sky_horizon_color = Color(0.7, 0.85, 0.95, 1)
+ground_horizon_color = Color(0.7, 0.85, 0.95, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 3
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="Mat_grass"]
+albedo_color = Color(0.36, 0.62, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+material = SubResource("Mat_grass")
+size = Vector3(80, 1, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(80, 1, 80)
+
+[sub_resource type="StandardMaterial3D" id="Mat_rock"]
+albedo_color = Color(0.55, 0.55, 0.6, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rock0"]
+material = SubResource("Mat_rock")
+size = Vector3(3, 4, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rock0"]
+size = Vector3(3, 4, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rock1"]
+material = SubResource("Mat_rock")
+size = Vector3(4, 6, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rock1"]
+size = Vector3(4, 6, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rock2"]
+material = SubResource("Mat_rock")
+size = Vector3(2, 4, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rock2"]
+size = Vector3(2, 4, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rock3"]
+material = SubResource("Mat_rock")
+size = Vector3(5, 8, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rock3"]
+size = Vector3(5, 8, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rock4"]
+material = SubResource("Mat_rock")
+size = Vector3(6, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rock4"]
+size = Vector3(6, 2, 2)
+
+[node name="TestWorld" type="Node3D"]
+script = ExtResource("1_world")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 20, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_ground")
+
+[node name="Shape" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="Rocks" type="Node3D" parent="."]
+
+[node name="Rock1" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.0, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock1"]
+mesh = SubResource("BoxMesh_rock0")
+
+[node name="Shape" type="CollisionShape3D" parent="Rocks/Rock1"]
+shape = SubResource("BoxShape3D_rock0")
+
+[node name="Rock2" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5, 8)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock2"]
+mesh = SubResource("BoxMesh_rock1")
+
+[node name="Shape" type="CollisionShape3D" parent="Rocks/Rock2"]
+shape = SubResource("BoxShape3D_rock1")
+
+[node name="Rock3" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 1.0, 10)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock3"]
+mesh = SubResource("BoxMesh_rock2")
+
+[node name="Shape" type="CollisionShape3D" parent="Rocks/Rock3"]
+shape = SubResource("BoxShape3D_rock2")
+
+[node name="Rock4" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 2.0, -4)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock4"]
+mesh = SubResource("BoxMesh_rock3")
+
+[node name="Shape" type="CollisionShape3D" parent="Rocks/Rock4"]
+shape = SubResource("BoxShape3D_rock3")
+
+[node name="Rock5" type="StaticBody3D" parent="Rocks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, -18)
+
+[node name="Mesh" type="MeshInstance3D" parent="Rocks/Rock5"]
+mesh = SubResource("BoxMesh_rock4")
+
+[node name="Shape" type="CollisionShape3D" parent="Rocks/Rock5"]
+shape = SubResource("BoxShape3D_rock4")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Fauceverde" parent="." instance=ExtResource("3_monster")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, -10)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Controls" type="Label" parent="HUD"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 520.0
+offset_bottom = 120.0
+text = "WASD / stick sinistro: muoviti   Shift / B: corri
+Mouse (clicca per agganciarlo) / frecce / stick destro: camera
+Esc: libera il mouse"
+
+[node name="EncounterLabel" type="Label" parent="HUD"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 80.0
+offset_right = 320.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 28
+text = "Incontro!"
+horizontal_alignment = 1

@@ -1,0 +1,52 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/monsters/roaming_monster.gd" id="1_monster"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.8
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_body"]
+albedo_color = Color(0.2, 0.5, 0.25, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+material = SubResource("Mat_body")
+radius = 0.8
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_horn"]
+albedo_color = Color(0.25, 0.1, 0.35, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_horn"]
+material = SubResource("Mat_horn")
+size = Vector3(0.3, 0.6, 0.3)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_detection"]
+radius = 4.0
+
+[node name="RoamingMonster" type="CharacterBody3D" groups=["monsters"]]
+script = ExtResource("1_monster")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="HornLeft" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 2.1, -0.3)
+mesh = SubResource("PrismMesh_horn")
+
+[node name="HornRight" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 2.1, -0.3)
+mesh = SubResource("PrismMesh_horn")
+
+[node name="DetectionArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_detection")
