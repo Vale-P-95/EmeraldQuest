@@ -1,0 +1,30 @@
+# Controllo automatico: a ogni push apre il progetto con Godot senza grafica
+# e fallisce se ci sono errori negli script o nelle scene.
+name: Controllo progetto
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  godot-check:
+    runs-on: ubuntu-latest
+    env:
+      GODOT_VERSION: 4.5.1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scarica Godot
+        run: |
+          curl -sSL -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q godot.zip
+          mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 godot
+      - name: Importa il progetto
+        run: ./godot --headless --import --path . 2>&1 | tee import.log
+      - name: Avvia la scena principale per qualche secondo
+        run: ./godot --headless --path . --quit-after 300 2>&1 | tee run.log
+      - name: Cerca errori
+        run: |
+          if grep -E "SCRIPT ERROR|ERROR:|Parse Error" import.log run.log; then
+            echo "Trovati errori"; exit 1
+          fi

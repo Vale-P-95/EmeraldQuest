@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Resource" path="res://data/skills/fiammata.tres" id="2_fiammata"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"brasolo"
+display_name = "Brasolo"
+description = "Starter di fuoco. Una piccola salamandra con la coda a brace. (Esempio: modifica pure tutto.)"
+types = Array[int]([0])
+hp = 44
+attack = 52
+defense = 43
+magic = 60
+spirit = 50
+speed = 65
+growth = "media"
+learnset = Dictionary[int, Resource]({
+5: ExtResource("2_fiammata")
+})
+catch_rate = 45
+field_skill = &"bruciare_rovi"
