@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/frana.tres" id="s_frana"]
+[ext_resource type="Resource" path="res://data/skills/sassata.tres" id="s_sassata"]
+[ext_resource type="Resource" path="res://data/skills/scudo_di_pietra.tres" id="s_scudo_di_pietra"]
+[ext_resource type="Resource" path="res://data/skills/spallata.tres" id="s_spallata"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"ciottolotto"
+display_name = "Ciottolotto"
+description = "Un tondo roditore di roccia che rosicchia il muschio e spacca i sassi coi denti."
+types = Array[int]([4])
+hp = 55
+attack = 60
+defense = 70
+magic = 35
+spirit = 45
+speed = 30
+growth = "media"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_spallata"),
+2: ExtResource("s_sassata"),
+10: ExtResource("s_frana"),
+15: ExtResource("s_scudo_di_pietra")
+})
+catch_rate = 190
+field_skill = &"spaccare_rocce"
