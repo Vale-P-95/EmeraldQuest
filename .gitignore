@@ -1,0 +1,6 @@
+# Cache di Godot (si rigenera da sola)
+.godot/
+/android/
+*.tmp
+# Build esportate
+/build/
