@@ -261,18 +261,14 @@ func _aggiungi_una_volta(elenco: Array[String], voce: String) -> void:
 		elenco.append(voce)
 
 
-## Un dialogo chiede una lotta. Il sistema di battaglia non esiste ancora, quindi
-## per ora la lotta si considera vinta subito e il dialogo prosegue.
-##
-## Quando ci sarà, il sistema di battaglia dovrà:
-##   1. collegarsi a battaglia_richiesta e mettere in pausa il dialogo
-##      con Dialogic.paused = true;
-##   2. a lotta vinta, rimettere Dialogic.paused = false;
-##   3. contro Fauceverde, chiamare Storia.imposta_variabile("Cap1.FauceRotta", true)
-##      se la barra di Rottura è stata svuotata.
+## Un dialogo chiede una lotta. La ascolta BattleManager (scenes/battle/battle_manager.gd),
+## che mette in pausa il dialogo con Dialogic.paused = true, fa partire la lotta e
+## a lotta finita lo fa ripartire. Contro Fauceverde imposta anche "Cap1.FauceRotta"
+## se la barra di Rottura è stata svuotata.
+## Se nella scena non c'è nessun BattleManager, il dialogo prosegue come se la lotta fosse vinta.
 func _chiedi_battaglia(id: String, cattura: bool) -> void:
+	print("[Storia] Lotta richiesta: %s" % id)
 	battaglia_richiesta.emit(id, cattura)
-	print("[Storia] Lotta richiesta: %s (per ora vinta in automatico)." % id)
 
 
 # ------------------------------------------------------------------------------

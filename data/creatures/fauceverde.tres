@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Resource" path="res://data/skills/frustata.tres" id="s_frustata"]
+[ext_resource type="Resource" path="res://data/skills/morso_ombra.tres" id="s_morso_ombra"]
+[ext_resource type="Resource" path="res://data/skills/spora_sonno.tres" id="s_spora_sonno"]
+[ext_resource type="Resource" path="res://data/skills/radici_tenaci.tres" id="s_radici_tenaci"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"fauceverde"
+display_name = "Fauceverde"
+description = "Mostro grande della Grotta Muschiata: una bestia coperta di muschio con fauci d'ombra. Si caccia, non si cattura."
+types = Array[int]([2, 8])
+hp = 90
+attack = 85
+defense = 80
+magic = 70
+spirit = 70
+speed = 50
+growth = "lenta"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_frustata"),
+3: ExtResource("s_morso_ombra"),
+6: ExtResource("s_spora_sonno"),
+9: ExtResource("s_radici_tenaci")
+})
+catch_rate = 0
+is_large_monster = true
+drops = Dictionary[StringName, float]({
+&"muschio_antico": 1.0,
+&"zanna_d_ombra": 0.5
+})
