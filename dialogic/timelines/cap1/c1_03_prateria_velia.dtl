@@ -1,0 +1,65 @@
+# ============================================================
+# CAPITOLO 1 - Scena 3: La cartografa dei venti
+# Luogo: Prateria dei Venti, sul sentiero dopo i mulini.
+# Primo incontro con Velia, che si presenta come studiosa.
+# In realtà appartiene alla Confraternita del Vuoto, ma qui non lo dice.
+# Flag che nascono in questa scena:
+#   Cap1.VeliaIncontrata  - hai parlato con lei
+#   Cap1.PolvereRaccolta  - hai un campione di polvere di smeraldo
+#   Cap1.VeliaSospetto    - hai scelto di non fidarti
+# ============================================================
+
+L'erba della Prateria è alta fino alla vita e si piega in tre direzioni diverse. Le pale dei mulini sono ferme contro il cielo.
+Sul ciglio del sentiero c'è un Saltarupe steso su un fianco. Respira a strappi. Il pelo sul dorso luccica di verde.
+Accanto a lui è inginocchiata una donna vestita di grigio. Sulla schiena porta una gabbia da viaggio. La gabbia è vuota.
+brisa: Quella non è di Portofoglia.
+velia: Piano, per favore. Si è appena calmato.
+velia: Mi chiamo Velia. Disegno le carte dei venti, o almeno le disegnavo quando i venti stavano fermi abbastanza da farsi disegnare.
+velia: Questo piccolo ha caricato il mio mulo per mezza mattina. Poi è crollato. Guardate il dorso.
+Tra i peli c'è una polvere fina, verde, che brilla anche all'ombra. Dove tocca la pelle, la pelle è calda.
+velia: Polvere di smeraldo. Cade col vento da tre mesi. Le creature la respirano, e qualcosa dentro di loro comincia a gridare. Io la chiamo la Smania.
+[signal arg="diario:smania"]
+set {Cap1.VeliaIncontrata} = true
+
+velia: Mi serve una mano ferma per ripulirlo. Mi aiuti?
+- (Ti inginocchi e tieni fermo il Saltarupe.)
+	Il Saltarupe trema sotto le tue mani. Velia passa un panno umido, piano, contropelo.
+	velia: Ecco. Visto? Non era cattivo. Aveva solo troppo rumore in testa.
+	velia: Hai mani buone. Tieni, questa è la polvere che gli ho tolto. Sigillata. Mostrala a chi dalle tue parti prende le decisioni.
+	[signal arg="oggetto:polvere_di_smeraldo:1"]
+	set {Cap1.PolvereRaccolta} = true
+	set {Rep.Confraternita} += 3
+	set {Rep.Villaggi} += 2
+- (Resti in piedi e la osservi lavorare.)
+	Velia ripulisce il Saltarupe da sola. Ha gesti precisi, da chi lo ha fatto molte volte.
+	velia: Diffidare è un buon istinto, di questi tempi. Non mi offendo.
+	set {Cap1.VeliaSospetto} = true
+	brisa: Una gabbia vuota e nessun compagno. Tu ti fidi?
+	- (Raccogli di nascosto un po' di polvere dal sentiero.)
+		Ne chiudi un pizzico in un cristallo vuoto. Brilla attraverso il vetro.
+		[signal arg="oggetto:polvere_di_smeraldo:1"]
+		set {Cap1.PolvereRaccolta} = true
+	- (Lasci stare. Ilva ha detto di non toccare niente.)
+		brisa: Giusto. Portiamo la notizia, non il problema.
+		set {Rep.Gilda} += 2
+- (Le fai segno di allontanarsi. Alle creature della Prateria pensa la Gilda.)
+	velia: Come vuoi. La Gilda arriva sempre, alla fine. Di solito con le lance.
+	Velia si alza senza fretta. Il Saltarupe, rimasto solo, si rimette in piedi e fugge nell'erba alta.
+	set {Cap1.VeliaSospetto} = true
+	set {Rep.Gilda} += 2
+	set {Rep.Confraternita} -= 3
+
+velia: Vi dico una cosa, e poi vi lascio alla vostra missione. La polvere non nasce qui. Arriva da nord, dalla Grotta Muschiata. Lì dentro qualcosa la soffia fuori a ogni respiro.
+brisa: La Grotta è la tana della Vecchia Verde.
+velia: Allora la vostra Vecchia Verde sta molto male.
+velia: Un favore. Non dite alla vostra Capogilda che mi avete vista. Le Gilde non amano chi studia senza permesso, e io ho ancora molta strada da fare.
+- (Annuisci. Resterà tra voi.)
+	velia: Sei gentile. Non lo dimenticherò.
+	set {Cap1.PromessaVelia} = true
+- (Non prometti niente.)
+	velia: Onesto. È già più di quanto mi aspettassi.
+
+Velia si carica la gabbia vuota sulle spalle e si allontana verso nord. Non lascia quasi impronte.
+brisa: Hai notato quella gabbia? Vuota. Chi è che gira per la Prateria senza un compagno, adesso?
+[signal arg="missione_obiettivo:c1_m2:2"]
+[end_timeline]

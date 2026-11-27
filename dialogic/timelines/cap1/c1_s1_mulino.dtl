@@ -1,0 +1,158 @@
+# ============================================================
+# CAPITOLO 1 - Missione secondaria 1: Il mulino fermo
+# Luogo: Prateria dei Venti, mulino di Pina.
+# Un branco di Saltarupe ha fatto il nido negli ingranaggi del mulino.
+# TRE FINALI (Cap1.MulinoEsito):
+#   "scacciati" = li cacci con la forza          (Gilda +, materiali)
+#   "spostati"  = sposti il nido con un'esca     (Villaggi +, serve la Focaccia di semi)
+#   "venduti"   = ne consegni uno a Velia        (Confraternita +, Villaggi -)
+# Cap1.MulinoStato: 0 = non iniziata, 1 = in corso, 2 = conclusa.
+# Variabili impostate dal gioco:
+#   Cap1.HaFocaccia = true quando hai cucinato una Focaccia di semi
+# Ogni "label" è un momento diverso: il gioco avvia la timeline
+# dall'etichetta giusta, per esempio Dialogic.start("c1_s1_mulino", "nido").
+# ============================================================
+
+label inizio
+if {Cap1.MulinoStato} == 2:
+	jump dopo
+if {Cap1.MulinoStato} == 1:
+	pina: Sono ancora lassù. Li sento grattare. Vai a vedere, e poi dimmi che si può fare qualcosa.
+	[end_timeline]
+Il mulino di Pina è il più vecchio della Prateria. Le pale sono ferme, ma dentro la torre qualcosa raspa e squittisce.
+pina: Se sei qui per la farina, torna tra un mese. Se sei qui per ridere, la porta è quella.
+pina: Ah. Il paramano della Gilda. Allora forse servi a qualcosa.
+pina: Senza vento le pale non girano, e questo lo sanno tutti. Quello che non sanno è che appena si sono fermate, un branco di Saltarupe mi si è infilato nella torre. Hanno fatto il nido negli ingranaggi.
+pina: Adesso il vento potrebbe anche tornare. Io le pale non le sblocco, con quelle bestie lì in mezzo. Li trito tutti.
+pina: E mordono. Guarda qua. Prima venivano a mangiarmi il grano dalle mani.
+- (Le fai segno che te ne occupi tu.)
+	pina: Sali dalla scala interna. E attenzione al terzo gradino, che è marcio dal tempo di mio nonno.
+	set {Cap1.MulinoStato} = 1
+	[signal arg="missione_inizio:c1_s1"]
+- (Indichi il sacco di grano. Può darsi che sia quello ad attirarli.)
+	pina: Il grano? È lo stesso di sempre. Anche se. Quest'anno sulle spighe c'era una polverina. Verde. Pensavo fosse muffa.
+	pina: Sali e guarda tu. Scala interna, e attenzione al terzo gradino.
+	set {Cap1.MulinoStato} = 1
+	set {Cap1.MulinoPolvere} = true
+	[signal arg="missione_inizio:c1_s1"]
+- (Scuoti la testa. Adesso non puoi.)
+	pina: Certo. Nessuno può. Il mulino aspetta, tanto è fermo.
+[end_timeline]
+
+# ------------------------------------------------------------
+# In cima alla torre, davanti al nido.
+label nido
+if {Cap1.MulinoStato} == 2:
+	Gli ingranaggi sono liberi. Del nido resta qualche ciuffo di pelo tra i denti delle ruote.
+	[end_timeline]
+In cima alla torre, tra le ruote dentate, c'è un nido di paglia e pelo. Quattro Saltarupe adulti e almeno tre cuccioli. Hanno il pelo sporco di verde.
+Gli adulti ti soffiano contro, tutti insieme. I cuccioli dormono sopra un mucchio di grano che luccica.
+if {Cap1.MulinoPolvere} == true or {Cap1.VeliaIncontrata} == true:
+	È la polvere di smeraldo. Sta sul grano, e loro ci dormono sopra. La Smania li tiene qui e li tiene arrabbiati.
+
+# La seconda e la terza risposta hanno una condizione: senza, restano grigie con un suggerimento.
+Gli ingranaggi sono a un palmo dal nido. Se le pale ripartono adesso, non si salva nessuno.
+- (Mandi avanti il tuo compagno. Fuori di qui, con le buone o con le cattive.)
+	[signal arg="battaglia:branco_saltarupe_mulino"]
+	Il branco regge poco. Gli adulti scappano dalla finestra delle pale portando i cuccioli per la collottola. Nel nido restano ciuffi di pelo e un corno spezzato.
+	[signal arg="oggetto:ciuffo_di_saltarupe:4"]
+	[signal arg="oggetto:corno_di_saltarupe:1"]
+	set {Cap1.MulinoEsito} = "scacciati"
+	set {Rep.Gilda} += 5
+- (Posi la Focaccia di semi sul davanzale, e poi un pezzo più in là, e un altro ancora.) | [if {Cap1.HaFocaccia} == true] [else="disable" alt_text="(Ti servirebbe un'esca. Pina dice che vanno matti per la Focaccia di semi.)"]
+	Il primo a muoversi è un cucciolo. Poi la madre, per riprenderlo. Poi tutti gli altri, perché nessuno vuole restare senza.
+	Li porti fuori un pezzo di focaccia alla volta, fino al vecchio fienile in fondo al campo. Il tuo {Cap1.StarterNome} chiude la fila e fa la guardia ai ritardatari.
+	Nel fienile il grano è pulito. Dopo un'ora gli adulti smettono di soffiare. Uno si lascia perfino grattare tra le corna.
+	[signal arg="oggetto_togli:focaccia_di_semi:1"]
+	[signal arg="oggetto:ciuffo_di_saltarupe:2"]
+	set {Cap1.MulinoEsito} = "spostati"
+	set {Rep.Villaggi} += 6
+	if {Cap1.PromessaOride} == true:
+		Nessuno si è fatto male. Oride sarà contenta di saperlo.
+		set {Rep.Villaggi} += 2
+- (Catturi il più agitato in un cristallo. Velia cercava proprio creature con la Smania.) | [if {Cap1.VeliaIncontrata} == true] [else="hide"]
+	[signal arg="battaglia_cattura:saltarupe_smanioso"]
+	Senza il capobranco gli altri perdono la testa e scappano dalla finestra delle pale. I cuccioli li seguono piangendo.
+	Il cristallo, in mano, è caldo e vibra. Dentro, il Saltarupe non smette di caricare le pareti.
+	set {Cap1.HaSaltarupeSmanioso} = true
+	set {Cap1.MulinoEsito} = "venduti"
+	[signal arg="missione_obiettivo:c1_s1:2"]
+- (Scendi. Devi prima prepararti.)
+	[end_timeline]
+
+set {Cap1.MulinoStato} = 2
+# Chi ha scelto "venduti" deve ancora consegnare il cristallo a Velia (etichetta "velia").
+jump ritorno
+
+# ------------------------------------------------------------
+# Di nuovo da Pina, a lavoro finito.
+label ritorno
+if {Cap1.MulinoEsito} == "scacciati":
+	pina: Ho sentito il trambusto fin da qui. Sono andati? Tutti?
+	pina: Bene. Cioè. I piccoli strillavano. Ma è andata, e io ho un villaggio da sfamare.
+	pina: Tieni. Farina non ne ho, ma questi sono soldi veri.
+	[signal arg="monete:120"]
+	[signal arg="missione_fine:c1_s1:scacciati"]
+elif {Cap1.MulinoEsito} == "spostati":
+	pina: Nel fienile? Li hai portati a spasso fino al fienile con una focaccia?
+	pina: Mio nonno diceva che un Saltarupe sotto il tetto porta sette anni di buon vento. Il fienile tanto era vuoto. Che ci restino.
+	pina: Soldi ne ho pochi. Però da oggi, finché macino io, la farina per te costa la metà. E prendi la ricetta di mia madre.
+	[signal arg="monete:60"]
+	[signal arg="ricetta:pane_del_viandante"]
+	[signal arg="prezzi:mulino_di_pina:-50"]
+	[signal arg="missione_fine:c1_s1:spostati"]
+else:
+	pina: Sono scappati? E i piccoli? Li ho sentiti piangere per tutta la Prateria.
+	pina: E il grosso, quello col corno storto? Veniva a mangiarmi dalle mani da quando era alto così. Non l'ho visto uscire.
+	- (Le mostri il cristallo.)
+		pina: L'hai preso tu. E dove lo porti?
+		pina: No, non dirmelo. Il mulino è libero. Prendi i tuoi soldi e vai.
+		set {Rep.Villaggi} -= 3
+	- (Allarghi le braccia. Non ne sai niente.)
+		pina: Mh. Sarà.
+		set {Cap1.MulinoBugia} = true
+	[signal arg="monete:80"]
+[end_timeline]
+
+# ------------------------------------------------------------
+# Consegna a Velia (solo finale "venduti"). La trovi sul sentiero del nord.
+label velia
+if {Cap1.HaSaltarupeSmanioso} == false:
+	velia: Quando vedi una creatura con la Smania addosso, pensa a me. Io so come farla smettere di soffrire.
+	[end_timeline]
+velia: Un capobranco. E in piena Smania. Hai un talento che la tua Gilda non sa nemmeno di avere.
+velia: Dallo a me. Tra un'ora sarà la creatura più tranquilla di Verdalia.
+- (Le consegni il cristallo.)
+	Velia apre il cristallo dentro la gabbia. Il Saltarupe carica le sbarre una volta, due. Lei gli posa due dita sulla fronte.
+	La terza carica non arriva. Il Saltarupe resta dritto, immobile, con gli occhi aperti.
+	velia: Ecco. Silenzio. Questo è per il disturbo, e questo è perché mi piace chi mantiene quello che comincia.
+	[signal arg="oggetto_togli:cristallo_saltarupe_smanioso:1"]
+	[signal arg="monete:300"]
+	[signal arg="oggetto:essenza_di_quiete:1"]
+	set {Cap1.HaSaltarupeSmanioso} = false
+	set {Cap1.SaQuiete} = true
+	set {Rep.Confraternita} += 8
+	set {Rep.Villaggi} -= 5
+	[signal arg="missione_fine:c1_s1:venduti"]
+- (Ci ripensi. Il cristallo resta a te.)
+	velia: Tienilo, allora. Ma non aprirlo vicino a qualcuno a cui tieni.
+	# Finale di ripiego: liberi il Saltarupe nel fienile di Pina e la missione si chiude come "spostati".
+	Lo porti al fienile in fondo al campo e apri il cristallo da lontano. Il capobranco esce a testa bassa, annusa l'aria e ritrova i suoi.
+	[signal arg="oggetto_togli:cristallo_saltarupe_smanioso:1"]
+	set {Cap1.HaSaltarupeSmanioso} = false
+	set {Cap1.MulinoEsito} = "spostati"
+	set {Rep.Villaggi} += 3
+	set {Rep.Confraternita} -= 2
+	[signal arg="missione_fine:c1_s1:spostati"]
+[end_timeline]
+
+# ------------------------------------------------------------
+# Battute di Pina a missione conclusa.
+label dopo
+if {Cap1.MulinoEsito} == "spostati":
+	pina: I tuoi amici del fienile stanotte hanno cantato. Stonati come campane, ma hanno cantato.
+elif {Cap1.MulinoEsito} == "scacciati":
+	pina: Le pale girano. Ogni tanto guardo verso il bosco, per vedere se tornano. Non tornano.
+else:
+	pina: Il mulino macina. Il resto non lo voglio sapere.
+[end_timeline]

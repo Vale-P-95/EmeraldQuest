@@ -1,0 +1,47 @@
+# ============================================================
+# CAPITOLO 1 - Scena 7: Le spore
+# Luogo: Grotta Muschiata, sala delle radici (metà dungeon).
+# Momento serio del capitolo: Brisa è corsa avanti ed è stata avvelenata.
+# Il giocatore ha un solo Antidoto di salvia (lo dà Ilva a inizio missione).
+# Flag: Cap1.BrisaCurata
+#   true  = hai usato l'antidoto su di lei, prosegue con te
+#   false = l'hai lasciata riposare o rimandata indietro
+# ============================================================
+
+Un fischio. Corto, storto, non quello che avevate concordato. Viene dalla sala delle radici.
+Brisa è seduta contro una radice, le ginocchia al petto. Intorno a lei il muschio nero ha aperto dei bozzoli, e l'aria è piena di spore.
+brisa: Non dirlo.
+brisa: C'era un passaggio. Stretto. Ho pensato, ci arrivo prima io. Ho pensato, così Ilva vede. Ho toccato un bozzolo.
+Ha le labbra grigie e le mani che tremano. Il suo compagno le gira intorno e guaisce piano.
+brisa: Mi gira tutto. Tu vai. Ce la faccio. Mi riposo un momento e ti raggiungo.
+
+# Il gioco controlla la borsa e imposta Cap1.HaAntidoto prima di avviare la scena.
+Nella borsa hai un solo antidoto di salvia. La Vecchia Verde è ancora più in fondo, e lì le spore saranno peggio.
+- (Le dai l'antidoto. Tutto.) | [if {Cap1.HaAntidoto} == true] [else="disable" alt_text="(Non hai più l'antidoto di salvia.)"]
+	Brisa beve con una smorfia. Il colore le torna in faccia un poco alla volta.
+	brisa: Era l'unico. Lo so che era l'unico.
+	brisa: Non corro più avanti. Promesso. Sto un passo dietro di te e guardo dove metti i piedi.
+	[signal arg="oggetto_togli:antidoto_di_salvia:1"]
+	[signal arg="alleato:brisa"]
+	set {Cap1.BrisaCurata} = true
+	set {Legami.Brisa} += 5
+- (Le dai metà antidoto e tieni l'altra metà per te.) | [if {Cap1.HaAntidoto} == true]
+	Mezza fiala non basta a rimetterla in piedi, ma le ferma il tremito.
+	brisa: Giusto così. Uno dei due deve arrivare in fondo con la testa lucida.
+	brisa: Io ti aspetto qui. Se entro un'ora non torni, vengo a prenderti anche a quattro zampe.
+	[signal arg="oggetto_togli:antidoto_di_salvia:1"]
+	[signal arg="oggetto:mezzo_antidoto:1"]
+	set {Legami.Brisa} += 2
+- (La aiuti ad alzarsi e le indichi l'uscita. Deve tornare al villaggio.)
+	brisa: Mi stai rimandando a casa.
+	brisa: Hai ragione. Lo odio, ma hai ragione. Avviso Ilva. Tu non morire, che poi tocca a me spiegarlo.
+	Brisa si allontana appoggiandosi alla parete. Si volta una volta sola.
+	set {Cap1.BrisaRimandata} = true
+	set {Rep.Gilda} += 2
+- (Annuisci e prosegui. Ha detto che ce la fa.)
+	brisa: Ecco. Appunto. Vai.
+	Non ti guarda mentre te ne vai. Il suo compagno sì, a lungo.
+	set {Legami.Brisa} -= 3
+
+[signal arg="missione_obiettivo:c1_m3:4"]
+[end_timeline]

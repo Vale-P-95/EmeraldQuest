@@ -1,0 +1,45 @@
+# ============================================================
+# CAPITOLO 1 - Scena 9: Fauceverde
+# Luogo: Grotta Muschiata, la tana (stanza del boss).
+# Scena prima della lotta. Il giocatore decide come cominciarla.
+# Segnali per il sistema di battaglia:
+#   boss_modifica:fauceverde:sigillo    = boss indebolito (meno Attacco e Velocità)
+#   boss_modifica:fauceverde:cantilena  = barra di Rottura già a metà
+#   battaglia:fauceverde                = avvia la lotta
+# ============================================================
+
+La tana è una cupola di roccia, e una volta doveva essere bellissima. Il muschio azzurro resiste solo in alto, come un pezzo di cielo. Tutto il resto è nero.
+Al centro c'è lei. Fauceverde. La Vecchia Verde.
+È grande come una barca tirata in secca. Ha il dorso coperto di felci e un muso lungo, da lucertola antica. Dalla mascella sinistra, piantata tra due zanne, sporge una scheggia di luce verde.
+Non si è ancora accorta di te. Sta strofinando il muso contro la roccia, piano, da chissà quanti giorni. La roccia in quel punto è consumata.
+A ogni respiro la scheggia pulsa, e dalla bocca le esce il pulviscolo che ha fermato i mulini.
+
+if {Cap1.BrisaCurata} == true:
+	brisa: Guarda la mascella. Ce l'ha conficcato dentro. Sta cercando di toglierselo da tre mesi.
+	brisa: Io volevo il trofeo. Te lo giuro, fino a un minuto fa volevo il trofeo.
+elif {Cap1.Posizione} == "caccia":
+	In piazza, accanto a Ilva, sembrava tutto più semplice.
+else:
+	La nonna di Oride le portava il primo pane. Nilde si è fatta riportare a casa per il colletto. Adesso tocca a te starle davanti.
+
+Fauceverde alza la testa. Gli occhi sono velati di verde. Ti trova, e il ringhio che le sale dalla gola fa cadere la polvere dal soffitto.
+- (Posi a terra il Sigillo del Vuoto.) | [if {Cap1.PattoVelia} == true]
+	Il Sigillo tocca la pietra, e i suoni si allontanano. Il ringhio si abbassa, le felci sul dorso si afflosciano. Fauceverde barcolla, come chi si sveglia troppo in fretta.
+	Il tuo {Cap1.StarterNome} si stringe contro la tua gamba. Il Sigillo non piace nemmeno a lui.
+	[signal arg="boss_modifica:fauceverde:sigillo"]
+	set {Cap1.SigilloUsato} = true
+	set {Rep.Confraternita} += 5
+- (Canti la Cantilena della Fonte. Tre note che salgono, una che scende.) | [if {Cap1.Cantilena} == true]
+	La tua voce esce roca. Non la usi quasi mai.
+	Fauceverde si ferma a metà del passo. Per un momento il velo verde sugli occhi si assottiglia, e ti guarda davvero. Poi la scheggia pulsa, e il momento passa.
+	Ma ha esitato. Sotto la Smania c'è ancora qualcuno.
+	[signal arg="boss_modifica:fauceverde:cantilena"]
+	set {Cap1.CantilenaUsata} = true
+	set {Rep.Villaggi} += 3
+- (Mandi avanti il tuo compagno. Si lotta.)
+	Il tuo {Cap1.StarterNome} si pianta tra te e lei, piccolo quanto una delle sue unghie, e non arretra di un passo.
+
+# Suggerimento per il giocatore: la Rottura è il modo per toglierle il frammento senza ucciderla.
+La scheggia nella mascella pulsa a ogni colpo di cuore. Se riuscissi a spezzarle la guardia, forse ci arriveresti.
+[signal arg="battaglia:fauceverde"]
+[end_timeline]

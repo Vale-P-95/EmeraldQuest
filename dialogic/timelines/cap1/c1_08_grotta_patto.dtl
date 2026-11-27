@@ -1,0 +1,65 @@
+# ============================================================
+# CAPITOLO 1 - Scena 8: Il patto del Vuoto
+# Luogo: Grotta Muschiata, lago sotterraneo, davanti alla tana.
+# Velia rivela chi è e offre un patto: un Sigillo che indebolisce
+# Fauceverde, in cambio del frammento a lotta finita.
+# Flag:
+#   Cap1.PattoVelia     = hai accettato il Sigillo
+#   Cap1.VeliaRespinta  = l'hai mandata via in malo modo
+# Se hai denunciato Velia a Ilva (Cap1.VeliaDenunciata) lei lo sa.
+# ============================================================
+
+Il lago sotterraneo è nero e fermo. Dall'altra riva arriva il respiro, più forte, e a ogni respiro l'acqua si increspa di verde.
+Sulla riva, seduta su una pietra come su una panchina, c'è Velia. La gabbia non è più vuota.
+Dentro c'è un Saltarupe. Sta dritto, immobile, con gli occhi aperti. Non trema, non annusa, non ti guarda. Il pelo è pulito.
+velia: Ce ne hai messo di tempo. Temevo che il muschio ti avesse fatto cambiare idea.
+if {Cap1.VeliaDenunciata} == true:
+	velia: I due cacciatori che la tua Capogilda ha messo sul sentiero sono brave persone. Un po' rumorose. Non serbo rancore, hai fatto il tuo dovere.
+elif {Cap1.PromessaVelia} == true:
+	velia: Hai tenuto la parola, sul sentiero nessuno mi cercava. Da queste parti è merce rara.
+
+velia: Non sono una cartografa. O meglio, lo sono, ma disegno una carta sola. Quella dei frammenti.
+velia: La Notte Verde non è stata una tempesta. Lo Smeraldo dei Venti si è spezzato, e i pezzi sono caduti su tutta Verdalia. Uno è qui. Piantato nella mascella della vostra Vecchia.
+velia: Io appartengo alla Confraternita del Vuoto. Noi i frammenti li raccogliamo, e mettiamo a tacere quello che gridano.
+Con un dito sfiora le sbarre della gabbia. Il Saltarupe non reagisce.
+velia: Lui stamattina caricava i carri. Guardalo adesso. Niente Smania. Niente paura. Silenzio.
+
+label domande
+velia: Chiedi pure. Ho tempo, e lei là in fondo non va da nessuna parte.
+- (Indichi il Saltarupe. Che cosa gli ha fatto?)
+	velia: Gli ho tolto il rumore. Tutto. È quello che chiamiamo Quiete.
+	velia: Ti sembra triste? Stamattina soffriva. Adesso no. Decidi tu quale delle due cose è crudele.
+	set {Cap1.SaQuiete} = true
+	jump domande
+- (Indichi il fondo della grotta. Che cosa vuole dal frammento?) | [if {Cap1.VeliaSospetto} == true]
+	velia: Diretto. Mi piace. Vogliamo riunirli. Uno Smeraldo intero, in mani che sanno tenerlo, e in tutta Verdalia non ci sarà più una creatura che morde la mano del suo compagno.
+	velia: Nessuna, mai più. Pensa a quanto sarebbe tranquillo.
+	set {Cap1.SaPianoVuoto} = true
+	jump domande
+- (Le fai segno di arrivare al punto.)
+	jump offerta
+
+label offerta
+velia: Ecco la mia offerta. Questo è un Sigillo del Vuoto. Posato a terra davanti a lei, le spegne metà della furia. Sarà una lotta, non un massacro.
+velia: In cambio, a lotta finita, il frammento viene con me. La Gilda lo chiuderebbe in un forziere. Il tuo villaggio lo metterebbe su un altare. Noi sappiamo che cosa farne.
+- (Prendi il Sigillo.)
+	Il Sigillo è un disco di pietra grigia, freddo, più pesante di quanto sembri. Tenerlo in mano fa uno strano effetto, come quando in una stanza piena di gente tutti smettono di parlare.
+	velia: Saggio. Ti aspetto all'uscita. Non ti chiedo di fidarti, solo di ricordare chi ti ha aiutato quando serviva.
+	[signal arg="oggetto:sigillo_del_vuoto:1"]
+	set {Cap1.PattoVelia} = true
+	set {Rep.Confraternita} += 10
+- (Rifiuti con un cenno. Te la caverai senza.)
+	velia: Come preferisci. L'offerta non scade. Il Vuoto ha molta pazienza.
+	set {Rep.Confraternita} += 1
+- (Indichi la gabbia, poi l'uscita. Quella creatura torna libera, e lei se ne va.) | [if {Cap1.SaQuiete} == true]
+	velia: Libero. Apro la gabbia, se vuoi. Guarda.
+	Velia apre lo sportello. Il Saltarupe non si muove. Resta dov'è, con gli occhi aperti.
+	velia: Non sa più che cosa farsene, di una porta aperta. Me ne vado, ma lui viene con me. Qui morirebbe di fame senza accorgersene.
+	set {Cap1.VeliaRespinta} = true
+	set {Rep.Confraternita} -= 5
+	set {Rep.Villaggi} += 2
+
+Velia raccoglie la gabbia e risale il sentiero verso l'uscita. Il Saltarupe, dentro, non si volta.
+Dall'altra riva il respiro si interrompe. Poi qualcosa di molto grande si alza in piedi.
+[signal arg="missione_obiettivo:c1_m3:5"]
+[end_timeline]

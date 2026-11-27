@@ -1,0 +1,102 @@
+# ============================================================
+# CAPITOLO 1 - Scena 4: La voce del villaggio
+# Luogo: sede della Gilda, poi la piazza di Portofoglia.
+# Parte 1: rapporto a Ilva (puoi dire o tacere quello che hai visto).
+# Parte 2: assemblea in piazza. Gilda e villaggio vogliono cose opposte
+#          per Fauceverde, e il giocatore deve prendere posizione.
+# Variabile importante: Cap1.Posizione
+#   "caccia"    = hai sostenuto la Gilda (abbattere)
+#   "placare"   = hai sostenuto il villaggio (placare)
+#   "prova"     = hai mostrato la polvere: nessuno ha torto
+#   "neutrale"  = prima vuoi vedere con i tuoi occhi
+# ============================================================
+
+ilva: Siete interi. Bene. Adesso il rapporto, e senza ricami.
+brisa: I Saltarupe sono fuori di testa, Capogilda. Caricano tutto quello che si muove, poi crollano. E hanno il pelo pieno di roba verde.
+ilva: {Giocatore.Nome}. Tu che cosa hai visto?
+label rapporto
+ilva: Ti ascolto.
+- (Posi sul tavolo il campione di polvere di smeraldo.) | [if {Cap1.PolvereRaccolta} == true and {Cap1.PolvereMostrata} == false]
+	Ilva solleva il cristallo contro la finestra. La polvere, dentro, brilla da sola.
+	ilva: Questa non è terra, e non è polline. Avevo detto di non toccare niente.
+	ilva: E hai fatto bene a non darmi retta. Con questa in mano posso parlare alla piazza con dei fatti.
+	set {Cap1.PolvereMostrata} = true
+	set {Rep.Gilda} += 3
+	jump rapporto
+- (Racconti della donna in grigio.) | [if {Cap1.VeliaIncontrata} == true and {Cap1.VeliaDenunciata} == false and {Cap1.VeliaTaciuta} == false]
+	ilva: Una cartografa. Senza compagno, con una gabbia vuota, sulla mia Prateria. E sa da dove viene la polvere.
+	ilva: Metto due cacciatori sul sentiero del nord. Se è solo una studiosa, non avrà niente da temere.
+	set {Cap1.VeliaDenunciata} = true
+	set {Rep.Gilda} += 5
+	if {Cap1.PromessaVelia} == true:
+		Le avevi fatto un cenno di promessa, sul sentiero. Ti torna in mente adesso, a cose fatte.
+		set {Rep.Confraternita} -= 5
+	jump rapporto
+- (Indichi il nord. La polvere viene dalla Grotta Muschiata.)
+	ilva: La Grotta. La tana di Fauceverde.
+	ilva: Lo temevo. I pastori hanno visto il muschio nero scendere dal versante, e le sorgenti sanno di ferro.
+	jump assemblea
+- (Scuoti la testa. Niente da aggiungere.)
+	if {Cap1.VeliaIncontrata} == true and {Cap1.VeliaDenunciata} == false:
+		Brisa ti lancia un'occhiata, poi guarda altrove. Non dice niente nemmeno lei.
+		set {Cap1.VeliaTaciuta} = true
+		set {Rep.Confraternita} += 2
+	ilva: Va bene. Il resto lo so già dai pastori. Viene tutto dalla Grotta Muschiata, e nella Grotta abita Fauceverde.
+	jump assemblea
+
+label assemblea
+La notizia fa il giro di Portofoglia prima di sera. Al tramonto la piazza è piena, e nessuno ha portato da sedere.
+oride: La Vecchia Verde tiene pulite le nostre sorgenti da quando mia nonna era bambina. Ogni primavera le portiamo il primo pane. Non è un mostro. È una vicina di casa.
+nilde: Quand'ero piccola mi sono persa lassù, nella nebbia. Mi ha riportata lei fino al recinto, tenendomi per il colletto come un gattino.
+ilva: Nessuno lo nega. Ma la vicina di casa, adesso, soffia un veleno che fa impazzire i branchi e ferma i mulini.
+ilva: Il contratto della Gilda è chiaro. Un mostro grande che minaccia acqua e raccolto va abbattuto. E con i suoi materiali si armano dieci cacciatori per i mesi che verranno, che non saranno facili.
+ferro: Io le zanne le lavorerei volentieri, non dico di no. Però una lama me la paghi una volta sola. Una sorgente pulita serve tutti gli anni.
+brisa: E se aspettiamo e la prossima carica travolge un bambino? Qualcuno deve salire, e deve salire adesso.
+oride: Salire sì. Uccidere è un'altra cosa.
+tano: Sentiamo i ragazzi. Lassù ci sono stati loro.
+
+# Scelta centrale del capitolo: cambia reputazione, dialoghi e opzioni nella Grotta.
+La piazza si volta verso di te. Tanto silenzio, tutto insieme, non ti era mai capitato.
+- (Ti metti accanto a Ilva.) La Gilda ha ragione. Va abbattuta.
+	ilva: Allora è deciso. Domattina all'alba.
+	oride: È deciso per la Gilda. Portofoglia non ha ancora finito di pensarci.
+	nilde: Il primo pane gliel'ho portato per settant'anni. Non pensavo di vedere questo giorno.
+	set {Cap1.Posizione} = "caccia"
+	set {Rep.Gilda} += 10
+	set {Rep.Villaggi} -= 5
+- (Ti metti accanto a Oride.) Il villaggio ha ragione. Va placata.
+	oride: Grazie. Non sarà la strada più facile, lo so.
+	ilva: Placata. E come, di preciso? Con una ninna nanna?
+	nilde: Proprio con quella. Vieni qui, creatura. Te la insegno io, come l'hanno insegnata a me.
+	Nilde canta piano, tre note che salgono e una che scende. È la Cantilena della Fonte.
+	[signal arg="oggetto_chiave:cantilena_della_fonte"]
+	set {Cap1.Posizione} = "placare"
+	set {Cap1.Cantilena} = true
+	set {Rep.Villaggi} += 10
+	set {Rep.Gilda} -= 5
+- (Alzi il cristallo con la polvere.) Non è lei il veleno. È questo. | [if {Cap1.PolvereRaccolta} == true] [else="disable" alt_text="(Ti servirebbe una prova da mostrare alla piazza.)"]
+	La polvere brilla nella penombra. La piazza trattiene il fiato.
+	ilva: È la stessa che i Saltarupe hanno addosso. Se viene dalla Grotta, allora la Vecchia la respira da tre mesi, più di chiunque altro.
+	oride: Quindi non è lei che ci avvelena. È avvelenata.
+	ilva: Questo non la rende meno pericolosa. Ma cambia quello che andiamo a cercare.
+	nilde: Vieni qui. Se devi arrivarle vicino, ti serve la Cantilena della Fonte. Tre note che salgono e una che scende.
+	[signal arg="oggetto_chiave:cantilena_della_fonte"]
+	set {Cap1.Posizione} = "prova"
+	set {Cap1.Cantilena} = true
+	set {Rep.Gilda} += 5
+	set {Rep.Villaggi} += 5
+- (Non ti schieri.) Prima voglio vederla con i miei occhi.
+	ilva: Prudente. Non è una risposta, ma è prudente.
+	oride: A me basta. Chi vuole vedere, prima di colpire, ha già scelto qualcosa.
+	set {Cap1.Posizione} = "neutrale"
+	set {Rep.Gilda} += 2
+	set {Rep.Villaggi} += 2
+
+ilva: Comunque vada, lassù non si entra a mani nude. L'ingresso della Grotta è chiuso dal muschio nero e dentro è buio pesto.
+ilva: Passa da Ferro. Che ti metta addosso qualcosa di meglio di quella camicia. Poi sali con Brisa.
+ilva: E prendi questo. Antidoto di salvia, contro le spore. In magazzino ne era rimasto uno solo, quindi usalo con la testa.
+[signal arg="oggetto:antidoto_di_salvia:1"]
+set {Cap1.HaAntidoto} = true
+[signal arg="missione_fine:c1_m2:completata"]
+[signal arg="missione_inizio:c1_m3"]
+[end_timeline]

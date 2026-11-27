@@ -1,0 +1,48 @@
+# ============================================================
+# CAPITOLO 1 - Scena 2: Vento storto
+# Luogo: il molo di Portofoglia.
+# Qui parte la prima missione vera e si presentano le due voci
+# che si contenderanno il giocatore: la Gilda (Ilva) e il villaggio (Oride).
+# ============================================================
+
+Le barche rientrano a forza di braccia. Le vele pendono come panni stesi.
+tano: Niente. Nemmeno un refolo. Quarant'anni che esco da questo porto, e il maestrale non mi aveva mai piantato in mezzo al mare.
+tano: E quando si muove, gira. Soffia da terra, poi da ponente, poi si ferma di nuovo. Sembra che cerchi qualcosa.
+oride: Tano, quante ceste?
+tano: Due, sindaca. Due ceste in sei barche.
+oride: E i mulini della Prateria sono fermi da due giorni. Pina non è scesa al mercato. Tra una settimana qui non c'è più né pesce né farina.
+
+ilva: Il vento non si arresta e non si interroga. Ma quello che lo guasta, forse sì.
+ilva: I pastori dicono che le creature della Prateria sono impazzite. Branchi di Saltarupe che caricano i carri. Finora nessun ferito, e vorrei che restasse così.
+ilva: {Giocatore.Nome}, Brisa. Volevate una missione vera. Salite alla Prateria dei Venti, trovate Pina la mugnaia e scoprite che cosa agita quei branchi.
+brisa: Sì! Cioè. Agli ordini, Capogilda.
+oride: Ilva, sono due ragazzi con due cuccioli.
+ilva: Sono due reclute con un contratto. E sulla Prateria ci giocavano prima di saper camminare.
+oride: Allora ascoltate anche me. I Saltarupe pascolano lassù da prima che ci fosse Portofoglia. Se sono cambiati, qualcosa li ha cambiati. Non fategli pagare una colpa che non hanno.
+ilva: Fate quello che serve per tornare. Tutto il resto viene dopo.
+
+# Prima scelta tra le fazioni: piccoli spostamenti, ma i personaggi se ne ricordano.
+Tutte e due ti guardano. Aspettano un cenno.
+- (A Oride.) Andremo piano. Nessuno si farà male, se posso evitarlo.
+	oride: Grazie. Non ti chiedo altro.
+	ilva: Le buone intenzioni non fermano una carica. Ma tienile, non pesano.
+	set {Rep.Villaggi} += 3
+	set {Cap1.PromessaOride} = true
+- (A Ilva.) Prima il contratto. Torneremo con delle risposte.
+	ilva: Così si parla.
+	oride: Spero che tu sappia riconoscere la risposta giusta, quando la trovi.
+	set {Rep.Gilda} += 3
+- (Annuisci a entrambe e ti sistemi lo zaino.)
+	ilva: Poche parole. Meglio di troppe.
+	oride: Buon vento, allora. Quello che ne resta.
+	set {Rep.Gilda} += 1
+	set {Rep.Villaggi} += 1
+
+brisa: Prateria dei Venti, arriviamo. Scommetto che catturo un Saltarupe prima di te.
+ilva: Un'ultima cosa. Se trovate qualcosa che non capite, non toccatelo. Portatemi la notizia, non il problema.
+odo: Ehi. Ehi, {Giocatore.Nome}. Prima di andare, posso chiederti una cosa? È importante.
+# Odo dà la missione secondaria "Il compagno di Odo" (file c1_s2_odo).
+
+[signal arg="missione_inizio:c1_m2"]
+[signal arg="sblocca:prateria_dei_venti"]
+[end_timeline]
