@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/frustata.tres" id="s_frustata"]
+[ext_resource type="Resource" path="res://data/skills/radici_tenaci.tres" id="s_radici_tenaci"]
+[ext_resource type="Resource" path="res://data/skills/raggio_linfa.tres" id="s_raggio_linfa"]
+[ext_resource type="Resource" path="res://data/skills/spora_sonno.tres" id="s_spora_sonno"]
+[ext_resource type="Resource" path="res://data/creatures/selvarbo.tres" id="c_selvarbo"]
+
+[sub_resource type="Resource" id="Rule_1"]
+script = ExtResource("2_rule")
+evolves_into = ExtResource("c_selvarbo")
+condition = 0
+min_level = 34
+
+[resource]
+script = ExtResource("1_creature")
+id = &"fogliarbo"
+display_name = "Fogliarbo"
+description = "Il suo corpo è un tronco vivo; gli uccelli vi fanno il nido."
+types = Array[int]([2])
+hp = 70
+attack = 70
+defense = 75
+magic = 85
+spirit = 75
+speed = 55
+growth = "media"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_frustata"),
+2: ExtResource("s_raggio_linfa"),
+20: ExtResource("s_radici_tenaci"),
+26: ExtResource("s_spora_sonno")
+})
+evolutions = Array[ExtResource("2_rule")]([SubResource("Rule_1")])
+catch_rate = 90
+field_skill = &"tagliare_rovi"

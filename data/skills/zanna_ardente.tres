@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+id = &"zanna_ardente"
+display_name = "Zanna Ardente"
+description = "Un morso rovente."
+element = 0
+category = 0
+power = 70
+accuracy = 95
+ap_cost = 2
+status_effect = &"bruciatura"
+status_chance = 15

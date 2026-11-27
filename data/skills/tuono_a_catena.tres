@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+id = &"tuono_a_catena"
+display_name = "Tuono a Catena"
+description = "Una tempesta di fulmini."
+element = 3
+category = 1
+power = 115
+accuracy = 75
+ap_cost = 5
+status_effect = &"paralisi"
+status_chance = 30

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+id = &"sassata"
+display_name = "Sassata"
+description = "Lancia un sasso."
+element = 4
+category = 0
+power = 45
+accuracy = 100
+ap_cost = 0
+status_effect = &""
+status_chance = 0

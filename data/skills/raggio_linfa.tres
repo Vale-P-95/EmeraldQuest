@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+id = &"raggio_linfa"
+display_name = "Raggio Linfa"
+description = "Cura il lanciatore di 1/4 del danno inflitto."
+element = 2
+category = 1
+power = 75
+accuracy = 100
+ap_cost = 3
+status_effect = &"assorbimento"
+status_chance = 100

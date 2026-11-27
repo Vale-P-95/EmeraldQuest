@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/frana.tres" id="s_frana"]
+[ext_resource type="Resource" path="res://data/skills/onda_marina.tres" id="s_onda_marina"]
+[ext_resource type="Resource" path="res://data/skills/sassata.tres" id="s_sassata"]
+[ext_resource type="Resource" path="res://data/skills/scudo_di_pietra.tres" id="s_scudo_di_pietra"]
+[ext_resource type="Resource" path="res://data/skills/spruzzo.tres" id="s_spruzzo"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"coralunghi"
+display_name = "Coralunghi"
+description = "Il suo guscio di corallo cresce con l'affetto che riceve."
+types = Array[int]([1, 4])
+hp = 85
+attack = 80
+defense = 95
+magic = 75
+spirit = 85
+speed = 45
+growth = "lenta"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_spruzzo"),
+2: ExtResource("s_sassata"),
+22: ExtResource("s_onda_marina"),
+28: ExtResource("s_scudo_di_pietra"),
+36: ExtResource("s_frana")
+})
+catch_rate = 75
+field_skill = &"riempire_pozze"

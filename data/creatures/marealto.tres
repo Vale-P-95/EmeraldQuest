@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/morso_corallo.tres" id="s_morso_corallo"]
+[ext_resource type="Resource" path="res://data/skills/onda_marina.tres" id="s_onda_marina"]
+[ext_resource type="Resource" path="res://data/skills/spruzzo.tres" id="s_spruzzo"]
+[ext_resource type="Resource" path="res://data/skills/tempesta.tres" id="s_tempesta"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"marealto"
+display_name = "Marealto"
+description = "Cavalca le onde: i pescatori dicono che porti buona sorte."
+types = Array[int]([1])
+hp = 80
+attack = 70
+defense = 75
+magic = 90
+spirit = 80
+speed = 60
+growth = "lenta"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_spruzzo"),
+2: ExtResource("s_morso_corallo"),
+22: ExtResource("s_onda_marina"),
+36: ExtResource("s_tempesta")
+})
+catch_rate = 75
+field_skill = &"riempire_pozze"

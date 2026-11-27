@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+id = &"spruzzo"
+display_name = "Spruzzo"
+description = "Un getto d'acqua veloce."
+element = 1
+category = 1
+power = 40
+accuracy = 100
+ap_cost = 0
+status_effect = &""
+status_chance = 0

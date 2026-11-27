@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SkillData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+id = &"velo_nero"
+display_name = "Velo Nero"
+description = "Oscura la vista del bersaglio."
+element = 8
+category = 2
+power = 0
+accuracy = 90
+ap_cost = 2
+status_effect = &"precisione_giu"
+status_chance = 100

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/eruzione.tres" id="s_eruzione"]
+[ext_resource type="Resource" path="res://data/skills/lampo.tres" id="s_lampo"]
+[ext_resource type="Resource" path="res://data/skills/lanciafiamme.tres" id="s_lanciafiamme"]
+[ext_resource type="Resource" path="res://data/skills/raggio_d_alba.tres" id="s_raggio_d_alba"]
+
+[resource]
+script = ExtResource("1_creature")
+id = &"aurelupo"
+display_name = "Aurelupo"
+description = "Il suo manto dorato brilla come il sole all'alba."
+types = Array[int]([0, 7])
+hp = 85
+attack = 70
+defense = 80
+magic = 105
+spirit = 95
+speed = 80
+growth = "lenta"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_lanciafiamme"),
+2: ExtResource("s_lampo"),
+34: ExtResource("s_raggio_d_alba"),
+42: ExtResource("s_eruzione")
+})
+catch_rate = 45
+field_skill = &"bruciare_rovi"

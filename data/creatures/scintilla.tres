@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/creature_data.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/data/evolution_rule.gd" id="2_rule"]
+[ext_resource type="Resource" path="res://data/skills/arco_voltaico.tres" id="s_arco_voltaico"]
+[ext_resource type="Resource" path="res://data/skills/scossa.tres" id="s_scossa"]
+[ext_resource type="Resource" path="res://data/skills/soffio.tres" id="s_soffio"]
+[ext_resource type="Resource" path="res://data/skills/spallata.tres" id="s_spallata"]
+[ext_resource type="Resource" path="res://data/creatures/fulgurala.tres" id="c_fulgurala"]
+
+[sub_resource type="Resource" id="Rule_1"]
+script = ExtResource("2_rule")
+evolves_into = ExtResource("c_fulgurala")
+condition = 0
+min_level = 20
+
+[resource]
+script = ExtResource("1_creature")
+id = &"scintilla"
+display_name = "Scintilla"
+description = "Rimbalza ovunque, carica di elettricità statica."
+types = Array[int]([3])
+hp = 40
+attack = 45
+defense = 40
+magic = 65
+spirit = 50
+speed = 80
+growth = "veloce"
+learnset = Dictionary[int, Resource]({
+1: ExtResource("s_spallata"),
+2: ExtResource("s_scossa"),
+8: ExtResource("s_soffio"),
+14: ExtResource("s_arco_voltaico")
+})
+evolutions = Array[ExtResource("2_rule")]([SubResource("Rule_1")])
+catch_rate = 190
+field_skill = &"accendere_lampioni"
