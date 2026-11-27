@@ -1,0 +1,58 @@
+# ============================================================
+# CAPITOLO 1 - Scena 5: La bottega di Ferro
+# Luogo: la fucina di Portofoglia.
+# Serve da introduzione al crafting: Ferro fabbrica il primo pezzo
+# di equipaggiamento con i materiali raccolti nella Prateria.
+# Il gioco deve impostare Cap1.HaMateriali = true quando il giocatore
+# ha in borsa 3 "Ciuffo di Saltarupe" e 1 "Legno di deriva"
+# (i nomi dei materiali sono provvisori).
+# Etichette: inizio (prima visita), consegna (torni con i materiali).
+# ============================================================
+
+label inizio
+La fucina è l'unico posto di Portofoglia dove il vento non è mai mancato. Lo fa Ferro, a colpi di mantice.
+ferro: Ah, la recluta di Ilva. Fatti vedere. Mh. Camicia di tela e buona volontà.
+ferro: Con quella roba nella Grotta Muschiata duri il tempo di uno starnuto. Le spore ti entrano dalle maniche.
+ferro: Ti faccio un paramano da domatore. Cuoio doppio, imbottito. Ma il cuoio non lo tiro fuori dal cappello.
+ferro: Portami tre ciuffi di Saltarupe, per l'imbottitura, e un pezzo di legno di deriva per le stecche. Li trovi sulla Prateria e sulla spiaggia.
+[signal arg="missione_obiettivo:c1_m3:1"]
+if {Cap1.HaMateriali} == true:
+	ferro: Aspetta. Quello che ti spunta dalla borsa è pelo di Saltarupe? Allora da' qua, facciamo subito.
+	jump consegna
+ferro: E già che sei qui. Tu che entri ed esci dalla Gilda, fammi un piacere, tieni gli occhi aperti in magazzino.
+ferro: Il ferro di palude che mi spetta arriva dimezzato da due mesi. O le casse dimagriscono per strada, o qualcuno ha le mani lunghe.
+# Aggancio alla missione secondaria "Conti in sospeso" (file c1_s3_conti).
+[signal arg="missione_disponibile:c1_s3"]
+[end_timeline]
+
+label consegna
+if {Cap1.HaMateriali} == false:
+	ferro: Tre ciuffi di Saltarupe e un legno di deriva. Senza, posso solo scaldarti le mani.
+	[end_timeline]
+ferro: Vediamo. Pelo fitto, asciutto. E il legno ha preso il sale giusto. Bene.
+Ferro lavora in fretta. Taglia, cuce, batte i rivetti. Canticchia qualcosa che potrebbe essere una canzone o un elenco di attrezzi.
+ferro: Regola numero uno del mestiere. Ogni creatura ti lascia qualcosa, e ogni cosa serve a qualcos'altro. Tu porta, io trasformo.
+ferro: Regola numero due. I mostri grandi lasciano pezzi che non trovi da nessun'altra parte. Se mai ne incontri uno, guarda bene che cosa perde.
+[signal arg="oggetto_togli:ciuffo_di_saltarupe:3"]
+[signal arg="oggetto_togli:legno_di_deriva:1"]
+[signal arg="oggetto:paramano_da_domatore:1"]
+ferro: Ecco qua. Paramano da domatore. Provalo.
+- (Lo indossi e stringi il pugno. Calza bene.)
+	ferro: Certo che calza. L'ho fatto io.
+- (Gli chiedi quanto gli devi.)
+	if {Rep.Villaggi} >= 10:
+		ferro: A te? Niente. In piazza hai parlato bene. Offre la casa.
+	else:
+		ferro: Il primo lo paga la Gilda. Dal secondo in poi, si tratta.
+- (Indichi le armi appese al muro.)
+	ferro: Quelle te le sogni. Rango due, minimo. E materiali che sulla Prateria non crescono.
+
+if {Cap1.Posizione} == "caccia":
+	ferro: Allora si va a caccia grossa. Se torni con una zanna di Fauceverde, portala qui prima che a chiunque altro. Ne faccio una cosa che tuo nipote userà ancora.
+elif {Cap1.Posizione} == "placare":
+	ferro: Ho sentito che vuoi cantarle una canzone. Io il paramano te l'ho fatto robusto lo stesso. Nel caso non le piaccia la musica.
+else:
+	ferro: Qualunque cosa tu decida lassù, decidila con le dita ancora attaccate. Il paramano serve a quello.
+[signal arg="missione_obiettivo:c1_m3:2"]
+[signal arg="sblocca:grotta_muschiata"]
+[end_timeline]

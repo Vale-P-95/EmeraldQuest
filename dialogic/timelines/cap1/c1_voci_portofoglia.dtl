@@ -1,0 +1,89 @@
+# ============================================================
+# CAPITOLO 1 - Voci di Portofoglia
+# Battute brevi degli abitanti quando parli con loro fuori dalle missioni.
+# Cambiano in base alla reputazione e a quello che è successo.
+# Ogni etichetta è un personaggio: il gioco avvia, per esempio,
+# Dialogic.start("c1_voci_portofoglia", "tano").
+# Soglie di reputazione usate in tutto il capitolo:
+#   10 o più = benvisto      -10 o meno = malvisto
+# ============================================================
+
+label tano
+if {Trama.Bivio1} == "vuoto":
+	tano: La barca grigia, l'altra notte. Io ero sveglio. Non dico altro, ma ero sveglio.
+elif {Cap1.FauceEsito} == "placata":
+	tano: Vento da maestrale, costante, mare lungo. Mio padre diceva che quando la Vecchia dorme bene, il mare fa il bravo.
+elif {Cap1.FauceEsito} == "abbattuta":
+	tano: Il vento c'è. Si pesca. Però la montagna, la sera, è troppo zitta. Non mi ci abituo.
+elif {Rep.Villaggi} >= 10:
+	tano: Eccoti. In piazza hai parlato come la gente di qui. Se ti serve un passaggio in barca, per te è gratis.
+elif {Rep.Villaggi} <= -10:
+	tano: La Gilda, la Gilda. Una volta qui decideva chi tirava le reti.
+else:
+	tano: Due ceste in sei barche, e cenere del Nonno fin dentro le reti. Se continua così, mi metto a pescare sulla Prateria.
+[end_timeline]
+
+label nilde
+if {Cap1.FauceEsito} == "abbattuta":
+	nilde: Il pane gliel'ho portato lo stesso. L'ho lasciato davanti alla Grotta. Qualcuno lo mangerà.
+elif {Cap1.FauceEsito} == "placata":
+	nilde: Ha mangiato tutto il pane e poi mi ha annusato il fazzoletto, come quando avevo sei anni. Si ricorda. Alla sua età!
+	nilde: E i bagni caldi hanno riaperto. L'acqua è tornata limpida. Vai a metterci i piedi, che te lo sei meritato.
+elif {Cap1.Cantilena} == true:
+	nilde: Tre note che salgono, una che scende. Non correre sulla terza. La Vecchia ha pazienza, ma è intonata.
+else:
+	nilde: Quando la nebbia scende dalla Prateria, noi vecchi diciamo che è la Verde che sospira. Ultimamente sospira troppo.
+[end_timeline]
+
+label oride
+if {Trama.Bivio1} == "villaggio":
+	oride: Il frammento è al Sacrario. Ci passo ogni mattina. Non so se lo sorveglio io, o se è lui che sorveglia me.
+elif {Trama.Bivio1} == "gilda":
+	oride: La staffetta è partita con il frammento. Ilva dice che è al sicuro. Io ho imparato a diffidare delle cose lontane.
+elif {Trama.Bivio1} == "vuoto":
+	oride: Non ti chiedo dov'è finito. Ti chiedo solo di guardare bene in faccia la gente a cui l'hai dato.
+elif {Cap1.Posizione} == "caccia":
+	oride: Non ce l'ho con te per quello che hai detto in piazza. Ma lassù guarda bene, prima di colpire.
+else:
+	oride: Un villaggio non è le sue case. È quello che decide di proteggere. Ricordatelo, quando sei lassù.
+[end_timeline]
+
+label ilva
+if {Trama.Bivio1} == "vuoto":
+	ilva: Per dove parti, e con chi parli. Non me lo sono dimenticato.
+elif {Giocatore.Rango} >= 2:
+	ilva: Rango due. Il traghetto parte quando vuoi tu. Prima però passa dallo spaccio, il mare di ponente non regala niente.
+elif {Rep.Gilda} >= 10:
+	ilva: Lavori bene, recluta. Non montarti la testa. Ma lavori bene.
+elif {Rep.Gilda} <= -10:
+	ilva: La Gilda non è un posto dove si viene a fare di testa propria. Pensaci.
+else:
+	ilva: Si indebolisce, poi si cattura. Ripetilo finché non lo sogni.
+[end_timeline]
+
+label mercante
+# Esempio di prezzo che cambia con la reputazione: il segnale lo legge il negozio.
+if {Rep.Villaggi} >= 10:
+	mercante: Ah, sei tu! Ti ho sentito parlare in piazza. Per te arrotondo. Verso il basso, s'intende.
+	[signal arg="prezzi:mercato_di_portofoglia:-10"]
+elif {Rep.Villaggi} <= -10:
+	mercante: I prezzi sono quelli. Anzi, per la Gilda c'è la tassa sul disturbo.
+	[signal arg="prezzi:mercato_di_portofoglia:10"]
+else:
+	mercante: Frutta secca, corda, cristalli vuoti. Prezzi onesti, quasi.
+	[signal arg="prezzi:mercato_di_portofoglia:0"]
+if {Cap1.SaFerroVuoto} == true:
+	mercante: Barcaioli col nastro color cenere? Ne ho visti a Ponente. Comprano ferro e non comprano nient'altro. Nemmeno da mangiare.
+[signal arg="negozio:mercato_di_portofoglia"]
+[end_timeline]
+
+label brisa
+if {Legami.Brisa} >= 6:
+	brisa: Dimmi dove andiamo e io ho già lo zaino pronto. Ce l'ho pronto da ieri.
+elif {Legami.Brisa} < 0:
+	brisa: Sto bene. Vai pure. Tanto ce la faccio da sola, no?
+elif {Cap1.FauceEsito} == "":
+	brisa: Scommetto che catturo un Saltarupe prima di te. Anzi, due.
+else:
+	brisa: Continuo a pensare a quella scheggia. Se una ha fatto tutto questo, le altre cosa stanno facendo?
+[end_timeline]

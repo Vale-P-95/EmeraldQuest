@@ -15,6 +15,106 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 window/size/viewport_width=1280
 window/size/viewport_height=720
 
+[autoload]
+
+Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+Storia="*res://autoload/storia.gd"
+
+[dialogic]
+
+directories/dch_directory={
+"brisa": "res://dialogic/characters/brisa.dch",
+"ferro": "res://dialogic/characters/ferro.dch",
+"ilva": "res://dialogic/characters/ilva.dch",
+"malco": "res://dialogic/characters/malco.dch",
+"mercante": "res://dialogic/characters/mercante.dch",
+"nilde": "res://dialogic/characters/nilde.dch",
+"odo": "res://dialogic/characters/odo.dch",
+"oride": "res://dialogic/characters/oride.dch",
+"pina": "res://dialogic/characters/pina.dch",
+"tano": "res://dialogic/characters/tano.dch",
+"velia": "res://dialogic/characters/velia.dch"
+}
+directories/dtl_directory={
+"c1_01_prologo": "res://dialogic/timelines/cap1/c1_01_prologo.dtl",
+"c1_02_vento_storto": "res://dialogic/timelines/cap1/c1_02_vento_storto.dtl",
+"c1_03_prateria_velia": "res://dialogic/timelines/cap1/c1_03_prateria_velia.dtl",
+"c1_04_assemblea": "res://dialogic/timelines/cap1/c1_04_assemblea.dtl",
+"c1_05_ferro": "res://dialogic/timelines/cap1/c1_05_ferro.dtl",
+"c1_06_grotta_ingresso": "res://dialogic/timelines/cap1/c1_06_grotta_ingresso.dtl",
+"c1_07_grotta_brisa": "res://dialogic/timelines/cap1/c1_07_grotta_brisa.dtl",
+"c1_08_grotta_patto": "res://dialogic/timelines/cap1/c1_08_grotta_patto.dtl",
+"c1_09_fauceverde_prima": "res://dialogic/timelines/cap1/c1_09_fauceverde_prima.dtl",
+"c1_10_fauceverde_dopo": "res://dialogic/timelines/cap1/c1_10_fauceverde_dopo.dtl",
+"c1_11_frammento": "res://dialogic/timelines/cap1/c1_11_frammento.dtl",
+"c1_s1_mulino": "res://dialogic/timelines/cap1/c1_s1_mulino.dtl",
+"c1_s2_odo": "res://dialogic/timelines/cap1/c1_s2_odo.dtl",
+"c1_s3_conti": "res://dialogic/timelines/cap1/c1_s3_conti.dtl",
+"c1_voci_portofoglia": "res://dialogic/timelines/cap1/c1_voci_portofoglia.dtl"
+}
+variables={
+"Giocatore": {
+"Nome": "Recluta",
+"Rango": 1
+},
+"Rep": {
+"Gilda": 0,
+"Villaggi": 0,
+"Confraternita": 0
+},
+"Legami": {
+"Brisa": 0
+},
+"Trama": {
+"Bivio1": ""
+},
+"Cap1": {
+"Starter": "",
+"StarterNome": "",
+"PromessaOride": false,
+"VeliaIncontrata": false,
+"VeliaSospetto": false,
+"PromessaVelia": false,
+"PolvereRaccolta": false,
+"PolvereMostrata": false,
+"VeliaDenunciata": false,
+"VeliaTaciuta": false,
+"Posizione": "",
+"Cantilena": false,
+"CantilenaUsata": false,
+"HaMateriali": false,
+"HaAntidoto": false,
+"BrisaCurata": false,
+"BrisaRimandata": false,
+"BrisaAlleata": false,
+"SaQuiete": false,
+"SaPianoVuoto": false,
+"SaFerroVuoto": false,
+"PattoVelia": false,
+"VeliaRespinta": false,
+"SigilloUsato": false,
+"FauceRotta": false,
+"FauceEsito": "",
+"PattoTradito": false,
+"MulinoStato": 0,
+"MulinoEsito": "",
+"MulinoPolvere": false,
+"MulinoBugia": false,
+"HaFocaccia": false,
+"HaSaltarupeSmanioso": false,
+"OdoStato": 0,
+"OdoEsito": "",
+"OdoMentito": false,
+"ContiStato": 0,
+"ContiEsito": "",
+"MalcoRicattato": false
+}
+}
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+
 [input]
 
 move_forward={
@@ -69,5 +169,14 @@ camera_down={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194322,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":3,"axis_value":1.0,"script":null)
+]
+}
+dialogic_default_action={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194309,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":32,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":88,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
 ]
 }

@@ -1,0 +1,82 @@
+# ============================================================
+# CAPITOLO 1 - Scena 10: La scheggia
+# Luogo: la tana, subito dopo la vittoria contro Fauceverde.
+# Il giocatore decide la sorte del mostro (quest a esiti multipli).
+# Prima di avviare la scena, il sistema di battaglia imposta:
+#   Cap1.FauceRotta = true  se la barra di Rottura è stata svuotata almeno una volta
+# Esito salvato in Cap1.FauceEsito: "abbattuta" oppure "placata".
+# ============================================================
+
+Fauceverde crolla su un fianco, e la grotta trema. Respira ancora, a fatica. La scheggia nella mascella batte come un secondo cuore.
+Il tuo {Cap1.StarterNome} ansima accanto a te, in piedi per puro orgoglio.
+if {Cap1.FauceRotta} == true:
+	Le hai spezzato la guardia. La mascella è scoperta, la scheggia è lì, a portata di mano.
+elif {Cap1.Cantilena} == true:
+	Stremata com'è, forse adesso la Cantilena la raggiungerebbe.
+
+# La seconda risposta è disponibile solo con la Rottura o con la Cantilena.
+Fauceverde ti guarda. Sotto il velo verde non c'è più rabbia. C'è solo molta stanchezza.
+- (Fai segno al tuo compagno. Il colpo di grazia.)
+	Dura un attimo. Il respiro lento che riempiva la grotta si ferma, e il silenzio che lascia è enorme.
+	La scheggia rotola sulla pietra, ancora accesa. Il pulviscolo verde nell'aria comincia a posarsi.
+	Raccogli quello che la Gilda si aspetta. Una zanna lunga quanto il tuo braccio, placche di felce, muschio antico.
+	[signal arg="oggetto:zanna_di_fauceverde:1"]
+	[signal arg="oggetto:placca_di_felce:3"]
+	[signal arg="oggetto:muschio_antico:2"]
+	set {Cap1.FauceEsito} = "abbattuta"
+	set {Rep.Gilda} += 10
+	set {Rep.Villaggi} -= 10
+	if {Cap1.PromessaOride} == true:
+		Avevi promesso a Oride che nessuno si sarebbe fatto male, se potevi evitarlo. Ti chiedi se potevi.
+- (Ti avvicini alla mascella e afferri la scheggia.) | [if {Cap1.FauceRotta} == true or {Cap1.Cantilena} == true] [else="disable" alt_text="(Non riesci ad avvicinarti. Avresti dovuto spezzarle la guardia, o conoscere la Cantilena.)"]
+	if {Cap1.Cantilena} == true:
+		Canti. Tre note che salgono, una che scende. La grande testa si abbassa fino a terra, e la mascella si apre.
+	else:
+		Lei ringhia, ma non ha la forza di chiudere la bocca. Il tuo paramano scricchiola contro le zanne.
+	La scheggia brucia di freddo. Tiri. Per un istante senti tutto quello che sente lei, tre mesi di rumore senza una pausa.
+	Poi viene via.
+	Fauceverde espira, a lungo, e stavolta dalla bocca non esce nessun pulviscolo. Il velo verde sugli occhi si scioglie. Sotto, sono color ambra.
+	Ti annusa. Ti spinge col muso, piano, facendoti cadere sul sedere. Poi si acciambella intorno alla sorgente calda, dentro il vapore, e chiude gli occhi.
+	Sul dorso, tra le felci, il muschio torna azzurro. Ne stacca un ciuffo con i denti e te lo lascia davanti.
+	[signal arg="oggetto:muschio_azzurro_della_vecchia:1"]
+	[signal arg="oggetto:placca_di_felce:1"]
+	set {Cap1.FauceEsito} = "placata"
+	set {Rep.Villaggi} += 10
+	if {Cap1.Posizione} == "caccia":
+		In piazza avevi detto un'altra cosa. Ilva vorrà una spiegazione.
+		set {Rep.Gilda} -= 5
+	else:
+		set {Rep.Gilda} += 2
+
+Hai in mano il frammento. È tiepido adesso, e leggerissimo. Dentro, se lo guardi controluce, gira un vento minuscolo.
+[signal arg="oggetto_chiave:frammento_dello_smeraldo_1"]
+
+if {Cap1.BrisaCurata} == true:
+	if {Cap1.FauceEsito} == "placata":
+		brisa: Le hai messo una mano in bocca. In bocca. A quella.
+		brisa: Mio padre avrebbe fatto uguale. E poi l'avrebbe raccontata per vent'anni.
+		set {Legami.Brisa} += 3
+	else:
+		brisa: È finita. Abbiamo fatto quello che dovevamo.
+		brisa: Allora perché non mi sento come pensavo?
+elif {Cap1.BrisaRimandata} == true:
+	Fuori dalla tana, dei passi di corsa. Brisa non è tornata al villaggio. È rimasta all'imbocco della galleria per tutto il tempo, col fischietto in mano.
+	brisa: Non dire niente a Ilva. E fammelo vedere.
+else:
+	Trovi Brisa dove l'avevi lasciata, addormentata contro la radice, col suo compagno di guardia. Si sveglia quando la luce verde le passa sul viso.
+	brisa: Ce l'hai fatta. Senza di me.
+
+if {Cap1.PattoVelia} == true:
+	All'uscita della Grotta, seduta su un sasso al sole, vi aspetta Velia. Non si alza.
+	velia: Lo senti anche tu, vero? Il vento ha cambiato voce. Portalo pure al villaggio, fatti festeggiare. Io sarò al molo vecchio, stanotte. Abbiamo un accordo.
+elif {Cap1.VeliaIncontrata} == true:
+	All'uscita della Grotta, lontano sul crinale, una figura in grigio vi guarda scendere. Quando ti volti di nuovo, non c'è più.
+
+Sulla Prateria l'erba si piega tutta dalla stessa parte. In lontananza, una dopo l'altra, le pale dei mulini ricominciano a girare.
+# I segnali non leggono le variabili, quindi l'esito si sceglie con un "if".
+if {Cap1.FauceEsito} == "placata":
+	[signal arg="missione_fine:c1_m3:placata"]
+else:
+	[signal arg="missione_fine:c1_m3:abbattuta"]
+[signal arg="missione_inizio:c1_m4"]
+[end_timeline]

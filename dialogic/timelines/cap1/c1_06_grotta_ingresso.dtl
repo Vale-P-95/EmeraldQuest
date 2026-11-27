@@ -1,0 +1,56 @@
+# ============================================================
+# CAPITOLO 1 - Scena 6: L'ingresso della Grotta Muschiata
+# Luogo: versante nord della Prateria.
+# L'ingresso è chiuso dal muschio nero. Si apre con l'abilità sul campo
+# del compagno iniziale, quindi la scena cambia in base a Cap1.Starter.
+# ============================================================
+
+Il sentiero del nord scende in una gola di colonne di basalto, tra cedri così vecchi che il muschio li ha vestiti fino in cima. In fondo scorre un torrente che fuma leggermente, perché nasce caldo.
+La gola finisce contro la montagna. Dove c'era l'imbocco della Grotta adesso c'è un muro di muschio nero, intrecciato a rovi grossi come un polso.
+Dall'interno esce un soffio lento, caldo. Ogni volta che arriva, nell'aria danza un pulviscolo verde.
+brisa: Respira. La montagna respira. Dimmi che lo vedi anche tu.
+brisa: Va bene. Come entriamo?
+
+if {Cap1.Starter} == "brasolo":
+	Il tuo {Cap1.StarterNome} annusa i rovi, starnutisce una fiammella e ti guarda, in attesa di un permesso.
+	- (Gli fai segno di bruciare i rovi.)
+		Il muschio nero si accartoccia e si ritira sibilando. Resta un varco bordato di brace, largo quanto due spalle.
+	- (Aspetti che Brisa si sposti, poi gli fai segno.)
+		brisa: Grazie del pensiero. Ci tengo, alle sopracciglia.
+		Il muschio nero si accartoccia e si ritira sibilando. Resta un varco bordato di brace.
+		set {Legami.Brisa} += 1
+elif {Cap1.Starter} == "gocciarpa":
+	Il tuo {Cap1.StarterNome} ignora i rovi e trotterella verso il torrente che esce dalla roccia, più in basso. Si tuffa, riemerge, ti chiama con un trillo.
+	- (Lo segui in acqua, a nuoto, dentro la montagna.)
+		L'acqua è tiepida e sa di ferro. Il torrente passa sotto il muro di rovi e vi porta dentro, in una sala bassa piena di echi e di vapore.
+	- (Fai segno a Brisa di aggrapparsi a te, poi vi tuffate.)
+		brisa: Io nuoto benissimo, sai? Ma grazie.
+		Il torrente passa sotto il muro di rovi e vi porta dentro, in una sala bassa piena di echi.
+		set {Legami.Brisa} += 1
+else:
+	Il tuo {Cap1.StarterNome} tasta i rovi con una foglia, come un sarto che valuta una stoffa. Poi ti guarda.
+	- (Gli fai segno di tagliare.)
+		Quattro colpi netti. I rovi cadono in fascine ordinate, e dietro compare l'imbocco della Grotta.
+	- (Gli indichi di lasciare intatte le radici vive.)
+		Taglia solo il muschio nero, e gira intorno alle radici verdi. Ci mette di più. Il varco che resta sembra una porta.
+		brisa: Hai fatto giardinaggio. Davanti alla tana di un mostro.
+		set {Rep.Villaggi} += 1
+[signal arg="abilita_campo_usata:ingresso_grotta"]
+
+Dentro, il muschio copre tutto. Quello sano manda una luce pallida, azzurrina. Quello nero non manda niente, e sono molte di più le chiazze nere.
+brisa: Mio padre diceva che qui dentro, una volta, si leggeva senza lanterna.
+brisa: Lui era uscito in mare la notte in cui il cielo è diventato verde. La barca è tornata. Vuota, con le vele strappate.
+brisa: Non l'ho detto per farti fare quella faccia. L'ho detto perché tu capisca una cosa. Io a questa storia del vento devo una risposta.
+- (Le posi una mano sulla spalla.)
+	brisa: Ecco. Sì. Bene. Adesso andiamo, prima che mi venga da piangere davanti a un muschio.
+	set {Legami.Brisa} += 2
+- (Annuisci. La risposta la troverete insieme.)
+	brisa: Insieme. Mi sta bene. Però la trovo prima io.
+	set {Legami.Brisa} += 1
+- (Le indichi il fondo della galleria. Le risposte sono là.)
+	brisa: Pratico. Hai ragione. Si piange dopo.
+
+brisa: Io prendo la galleria alta, tu quella bassa. Chi trova la Vecchia fischia. E non fare l'eroe.
+Brisa sparisce di corsa nel buio azzurro, prima che tu possa fermarla.
+[signal arg="missione_obiettivo:c1_m3:3"]
+[end_timeline]

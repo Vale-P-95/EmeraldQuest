@@ -23,8 +23,13 @@ jobs:
         run: ./godot --headless --import --path . 2>&1 | tee import.log
       - name: Avvia la scena principale per qualche secondo
         run: ./godot --headless --path . --quit-after 300 2>&1 | tee run.log
+      - name: Fa leggere a Dialogic tutti i dialoghi
+        run: ./godot --headless --path . --quit-after 600 -- --prova-dialoghi 2>&1 | tee dialoghi.log
+      - name: Controlla le timeline (variabili, personaggi, etichette)
+        run: python3 tools/controlla_timeline.py
       - name: Cerca errori
         run: |
-          if grep -E "SCRIPT ERROR|ERROR:|Parse Error" import.log run.log; then
+          grep "Prova dialoghi" dialoghi.log || { echo "La prova dei dialoghi non è partita"; exit 1; }
+          if grep -E "SCRIPT ERROR|ERROR:|Parse Error" import.log run.log dialoghi.log; then
             echo "Trovati errori"; exit 1
           fi

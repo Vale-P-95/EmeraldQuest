@@ -1,0 +1,120 @@
+# ============================================================
+# CAPITOLO 1 - Missione secondaria 2: Il compagno di Odo
+# Luoghi: molo di Portofoglia, poi una sala laterale della Grotta Muschiata.
+# Sasso, il Ciottolotto di Odo, è scappato verso la Grotta attirato dal frammento.
+# TRE FINALI (Cap1.OdoEsito):
+#   "riportato" = lo ripulisci dalla polvere e lo riporti a Odo   (Villaggi +)
+#   "gilda"     = lo affidi alle cure della Gilda                 (Gilda +)
+#   "tenuto"    = lo tieni nella tua squadra; a Odo puoi dire la verità o mentire
+# Cap1.OdoStato: 0 = non iniziata, 1 = in corso, 2 = Sasso trovato, 3 = conclusa.
+# Etichette: inizio (molo), grotta (trovi Sasso), ritorno (di nuovo da Odo).
+# ============================================================
+
+label inizio
+if {Cap1.OdoStato} == 3:
+	jump dopo
+if {Cap1.OdoStato} == 2:
+	jump ritorno
+if {Cap1.OdoStato} == 1:
+	odo: L'hai trovato? No? Lui ha una macchia bianca sul muso, a forma di pesce. Non puoi sbagliare.
+	[end_timeline]
+Odo ha nove anni, le ginocchia sbucciate e una ciotola di sassolini in mano. La tiene come si tiene una cosa molto importante.
+odo: Tu adesso sei della Gilda, giusto? Allora puoi cercare le creature. È il vostro lavoro.
+odo: Sasso è scappato. È il mio Ciottolotto. Tre notti fa si è messo a grattare la porta, e quando ho aperto è corso via verso la montagna. Non si è nemmeno girato.
+odo: Lui non scappa mai. Dorme nella mia scarpa. Questi sono i suoi sassolini preferiti, guarda, quelli lisci.
+odo: Papà dice che è andato e basta, che succede. Però non è vero che succede. A Sasso no.
+- (Ti abbassi alla sua altezza e annuisci. Lo cercherai.)
+	odo: Davvero? Tieni, porta questi. Se sente l'odore dei suoi sassolini, viene.
+	[signal arg="oggetto_chiave:sassolini_di_odo"]
+	[signal arg="missione_inizio:c1_s2"]
+	set {Cap1.OdoStato} = 1
+	set {Rep.Villaggi} += 1
+- (Gli indichi la montagna e alzi le spalle. Ci proverai, se capita.)
+	odo: Va bene. Se capita. Io intanto lo aspetto qui, così se torna mi trova.
+	[signal arg="missione_inizio:c1_s2"]
+	set {Cap1.OdoStato} = 1
+- (Gli fai segno che hai una missione più urgente.)
+	odo: Ah. Sì. Certo. Quelle vere.
+[end_timeline]
+
+# ------------------------------------------------------------
+# Sala laterale della Grotta: trovi Sasso.
+label grotta
+if {Cap1.OdoStato} >= 2:
+	La nicchia è vuota. Sul pavimento restano i segni dei denti nel muschio nero.
+	[end_timeline]
+In una nicchia della Grotta, un Ciottolotto sta rosicchiando il muschio nero. Ha una macchia bianca sul muso, a forma di pesce.
+Quando ti vede, non scappa. Ringhia. Ha la bocca sporca di verde, e gli occhi pure.
+[signal arg="battaglia:ciottolotto_sasso"]
+Sasso è a terra, senza fiato, ma continua a trascinarsi verso il muschio nero. Lo vuole più dell'aria.
+if {Cap1.OdoStato} == 1:
+	Posi davanti a lui i sassolini lisci. Li annusa. Per un momento smette di ringhiare.
+
+# La prima risposta richiede di sapere che cos'è la polvere (incontro con Velia o campione raccolto).
+Devi decidere in fretta. Si sta già rialzando.
+- (Lo tieni fermo e gli pulisci muso e bocca dalla polvere verde.) | [if {Cap1.VeliaIncontrata} == true or {Cap1.PolvereRaccolta} == true] [else="disable" alt_text="(Non sai che cosa lo fa stare così. Ti manca un'informazione.)"]
+	Ti morde il paramano tre volte. Alla quarta passata di panno il verde se ne va, e sotto c'è un Ciottolotto molto stanco che non capisce dove si trova.
+	Si arrampica nello zaino da solo e si addormenta sopra i sassolini.
+	set {Cap1.OdoEsito} = "riportato"
+- (Lo catturi. La Gilda saprà come curarlo.)
+	Il cristallo si chiude al primo colpo. Dentro, Sasso continua a grattare.
+	set {Cap1.OdoEsito} = "gilda"
+	[signal arg="oggetto_chiave:cristallo_di_sasso"]
+- (Lo catturi. Un Ciottolotto spacca le rocce, e alla tua squadra serve.)
+	Il cristallo si chiude al primo colpo. Dentro, Sasso continua a grattare. Passerà, ti dici. Con te starà bene.
+	set {Cap1.OdoEsito} = "tenuto"
+	[signal arg="creatura:ciottolotto_sasso"]
+set {Cap1.OdoStato} = 2
+[signal arg="missione_obiettivo:c1_s2:2"]
+[end_timeline]
+
+# ------------------------------------------------------------
+# Di nuovo al molo.
+label ritorno
+if {Cap1.OdoEsito} == "riportato":
+	Odo è ancora sul molo, nello stesso punto. Apri lo zaino. Una macchia bianca a forma di pesce sbuca tra i sassolini.
+	odo: SASSO!
+	Per un po' non si capisce chi dei due stia stritolando l'altro.
+	odo: È dimagrito. Gli do il doppio dei sassolini. Grazie. Grazie grazie grazie. Tieni, è il mio amo fortunato, con questo ho preso un pesce più grande di me.
+	[signal arg="oggetto:amo_fortunato:1"]
+	set {Rep.Villaggi} += 6
+	[signal arg="missione_fine:c1_s2:riportato"]
+elif {Cap1.OdoEsito} == "gilda":
+	odo: Alla Gilda? In una gabbia?
+	ilva: In una cuccia, sotto osservazione. Ha mangiato muschio nero per tre giorni, Odo. Se te lo ridò adesso, tra una settimana ti gratta di nuovo la porta.
+	ilva: Vieni a trovarlo quando vuoi. Portagli i sassolini. Quando sta bene, torna a dormire nella tua scarpa.
+	odo: Promesso?
+	ilva: Lo metto a registro. Più promesso di così non esiste.
+	set {Rep.Gilda} += 5
+	set {Rep.Villaggi} += 2
+	[signal arg="missione_fine:c1_s2:gilda"]
+else:
+	odo: L'hai trovato? Dimmi che l'hai trovato.
+	- (Gli mostri il cristallo. Sasso sta con te, adesso.)
+		odo: Con te. Ma è mio. Dorme nella mia scarpa.
+		odo: Però tu sei della Gilda. E lui era malato, vero? Tu lo sai curare e io no.
+		odo: Va bene. Tienigli i sassolini lisci. E non farlo combattere quando piove, che gli fa male la pancia.
+		Odo ti mette in mano la ciotola e se ne va senza correre.
+		set {Rep.Villaggi} -= 3
+		[signal arg="missione_fine:c1_s2:tenuto_verita"]
+	- (Scuoti la testa. Non l'hai trovato.)
+		odo: Ah.
+		odo: Allora lo aspetto ancora. I Ciottolotti tornano sempre. Me l'ha detto papà.
+		Nella borsa, il cristallo si muove appena.
+		set {Cap1.OdoMentito} = true
+		[signal arg="missione_fine:c1_s2:tenuto_bugia"]
+set {Cap1.OdoStato} = 3
+[end_timeline]
+
+# ------------------------------------------------------------
+# Battute di Odo a missione conclusa.
+label dopo
+if {Cap1.OdoEsito} == "riportato":
+	odo: Sasso ha imparato a portarmi i sassolini. Bagnati di bava. È il regalo più bello del mondo.
+elif {Cap1.OdoEsito} == "gilda":
+	odo: Oggi mi ha riconosciuto. Ilva dice ancora una settimana.
+elif {Cap1.OdoMentito} == true:
+	odo: Ho messo una ciotola sul molo. Così se torna di notte, sa che lo aspetto.
+else:
+	odo: Sta bene? Mangia? Digli che la scarpa è sempre lì.
+[end_timeline]

@@ -1,0 +1,116 @@
+# ============================================================
+# CAPITOLO 1 - Missione secondaria 3: Conti in sospeso
+# Luoghi: fucina di Ferro, magazzino della Gilda.
+# Il ferro di palude destinato a Ferro arriva dimezzato. Lo sottrae Malco,
+# l'intendente della Gilda, per aiutare tre famiglie rovinate dalla Notte Verde.
+# QUATTRO FINALI (Cap1.ContiEsito):
+#   "denunciato" = lo riferisci a Ilva                  (Gilda +, sconto da Ferro)
+#   "confessato" = lo convinci a confessare, garantisci tu (serve Rep.Gilda >= 10)
+#   "coperto"    = taci, lui smette                     (Villaggi +, sconto allo spaccio)
+#   "ricattato"  = ti fai pagare per tacere             (monete, ma nessuno si fida di più)
+# Cap1.ContiStato: 0 = non iniziata, 1 = in corso, 2 = conclusa.
+# Mostra come la reputazione cambia i prezzi (segnale "prezzi:negozio:percentuale").
+# ============================================================
+
+label inizio
+if {Cap1.ContiStato} == 2:
+	jump dopo
+if {Cap1.ContiStato} == 1:
+	ferro: Novità dal magazzino? Le casse non dimagriscono da sole, te lo dico io.
+	[end_timeline]
+ferro: Guarda questa cassa. Bolla della Gilda, sigillo intero. Dentro dovrebbero esserci dieci lingotti di ferro di palude. Contali.
+Sono cinque.
+ferro: Due mesi così. Io con cinque lingotti faccio metà dei ferri da mulo e nessuna lama. E Ilva dice che dai registri risulta tutto a posto.
+ferro: Io in magazzino non posso entrare. Tu sì. Dai un'occhiata ai registri di Malco, l'intendente. Senza fare rumore.
+- (Annuisci. Darai un'occhiata.)
+	ferro: Bene. E se trovi qualcosa, prima di correre da Ilva pensa. Malco è nato qui. Certe cose in un villaggio si aggiustano meglio a bassa voce.
+	set {Cap1.ContiStato} = 1
+	[signal arg="missione_inizio:c1_s3"]
+- (Gli fai segno che i conti della Gilda non sono affar tuo.)
+	ferro: Come vuoi. Poi però non venire a chiedermi perché le lame costano il doppio.
+[end_timeline]
+
+# ------------------------------------------------------------
+# Nel magazzino della Gilda, davanti allo scrittoio di Malco.
+label magazzino
+if {Cap1.ContiStato} == 2:
+	Lo scrittoio è in ordine. Un solo registro, adesso.
+	[end_timeline]
+Il magazzino odora di corda e olio per cuoio. Sullo scrittoio c'è il registro delle consegne, in bella calligrafia. Dieci lingotti a Ferro, ogni mese, puntuali.
+Sotto lo scrittoio, dietro una cesta, ce n'è un secondo. Stessa calligrafia. Cinque lingotti a Ferro. Cinque al molo vecchio, di notte. Accanto a ogni riga, tre nomi di famiglie di pescatori e una cifra.
+malco: Quello non è per le reclute.
+Malco è sulla porta, con un mazzo di chiavi in mano. Non sembra arrabbiato. Sembra uno che aspettava questo momento da due mesi.
+malco: Sai chi sono i Derna, i Boccadoro, i Salvi? Tre barche. La Notte Verde le ha mandate a fondo tutte e tre, con le reti. La Gilda ha compatito e ha passato oltre.
+malco: Io vendo cinque lingotti al mese a un barcaiolo che paga bene e non fa domande. Con quei soldi tre famiglie mangiano. Non ho tenuto una moneta. È tutto scritto lì.
+- (Indichi la riga del molo vecchio. Chi è il compratore?)
+	malco: Non lo so. Viene di notte, con una barca grigia. Porta un nastro color cenere al polso. Vuole solo ferro buono, da sbarre.
+	malco: Da sbarre. Non ci avevo mai pensato, detto così.
+	set {Cap1.SaFerroVuoto} = true
+- (Chiudi il registro e aspetti che finisca.)
+	malco: Ecco. Questo è tutto. Adesso sei tu che decidi che cosa sono, se un ladro o un contabile con troppa fantasia.
+
+# La seconda risposta richiede una buona reputazione con la Gilda.
+malco: Allora. Che cosa fai?
+- (Prendi il registro. Questo va a Ilva.)
+	malco: Sì. È giusto. Lo sapevo quando ho scritto la prima riga.
+	malco: Di' almeno a Ilva di leggere fino in fondo. I nomi, non solo i numeri.
+	set {Cap1.ContiEsito} = "denunciato"
+	set {Rep.Gilda} += 8
+	set {Rep.Villaggi} -= 3
+- (Gli porgi il registro e indichi l'ufficio di Ilva. Ci andate insieme, e garantisci tu.) | [if {Rep.Gilda} >= 10] [else="disable" alt_text="(La Gilda non ti conosce ancora abbastanza perché la tua parola conti.)"]
+	malco: Tu garantisci per me. Una recluta.
+	malco: Una recluta che Ilva ascolta, però. Va bene. Andiamo, prima che mi passi il coraggio.
+	set {Cap1.ContiEsito} = "confessato"
+	set {Rep.Gilda} += 5
+	set {Rep.Villaggi} += 4
+- (Rimetti il registro sotto lo scrittoio. Non hai visto niente, ma le vendite finiscono stanotte.)
+	malco: Finiscono. Hai la mia parola. Per le famiglie troverò un altro modo, uno che si possa scrivere su un registro solo.
+	malco: E quando passi dallo spaccio della Gilda, per te i prezzi li faccio io.
+	set {Cap1.ContiEsito} = "coperto"
+	set {Rep.Villaggi} += 5
+- (Tieni il registro sotto il braccio e tendi l'altra mano, a palmo in su.)
+	malco: Ah. Ecco. E io che pensavo di essere il peggiore, in questa stanza.
+	malco: Duecento monete. È tutto quello che c'era per i Salvi questo mese. Spero che ti servano più che a loro.
+	set {Cap1.ContiEsito} = "ricattato"
+	set {Cap1.MalcoRicattato} = true
+	set {Rep.Villaggi} -= 2
+set {Cap1.ContiStato} = 2
+jump esito
+
+# ------------------------------------------------------------
+label esito
+if {Cap1.ContiEsito} == "denunciato":
+	ilva: Due registri. In casa mia.
+	ilva: Malco lascia le chiavi oggi. Ferro riavrà i suoi dieci lingotti, e tu hai fatto quello che una recluta deve fare.
+	ilva: I Derna, i Boccadoro e i Salvi. Li conosco tutti. Avrei dovuto accorgermene io, prima di un intendente.
+	ferro: Dieci lingotti interi. Per te, da oggi, un decimo in meno su tutto. E a Malco, se lo vedi, digli che il mantice ha sempre bisogno di due braccia.
+	[signal arg="prezzi:fucina_di_ferro:-10"]
+	[signal arg="missione_fine:c1_s3:denunciato"]
+elif {Cap1.ContiEsito} == "confessato":
+	ilva: Sei venuto da solo, con il registro in mano e una recluta a farti da avvocato. Questo cambia la pena. Non la cancella.
+	ilva: Niente più chiavi. Resti in Gilda, alle reti, a paga dimezzata. L'altra metà va alle tre famiglie, per iscritto, a nome della Gilda. Come doveva essere dall'inizio.
+	malco: È più di quanto speravo.
+	ferro: Dieci lingotti, e nessuno alla gogna. Lo dicevo io che a bassa voce si aggiusta meglio. Un decimo in meno su tutto, per te.
+	[signal arg="prezzi:fucina_di_ferro:-10"]
+	[signal arg="prezzi:spaccio_della_gilda:-10"]
+	[signal arg="missione_fine:c1_s3:confessato"]
+elif {Cap1.ContiEsito} == "coperto":
+	ferro: Dieci lingotti. Sigillo intero, e stavolta dentro ci sono davvero. Non ti chiedo come hai fatto.
+	ferro: Anzi, sì. No. Meglio di no.
+	[signal arg="prezzi:spaccio_della_gilda:-20"]
+	[signal arg="missione_fine:c1_s3:coperto"]
+else:
+	[signal arg="monete:200"]
+	ferro: Le casse sono tornate piene. E Malco, quando ti nomino, guarda per terra.
+	ferro: Non voglio sapere. Ma il paramano che porti l'ho fatto io, e mi piacerebbe non pentirmene.
+	[signal arg="missione_fine:c1_s3:ricattato"]
+[end_timeline]
+
+# ------------------------------------------------------------
+# Battute di Ferro a missione conclusa.
+label dopo
+if {Cap1.ContiEsito} == "ricattato":
+	ferro: Serve qualcosa? Si paga in anticipo.
+else:
+	ferro: Il ferro di palude è arrivato giusto. Senti come canta l'incudine.
+[end_timeline]

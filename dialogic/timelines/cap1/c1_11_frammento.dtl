@@ -1,0 +1,118 @@
+# ============================================================
+# CAPITOLO 1 - Scena 11: Il primo frammento
+# Luogo: piazza di Portofoglia al tramonto, poi il molo vecchio di notte.
+# PRIMO BIVIO DELLA TRAMA PRINCIPALE (su 3 in tutto il gioco).
+# A chi va il frammento? La risposta finisce in Trama.Bivio1:
+#   "gilda"     = consegnato a Ilva
+#   "villaggio" = affidato a Oride e al Sacrario della Fonte
+#   "vuoto"     = dato a Velia e alla Confraternita
+# I capitoli successivi leggeranno questa variabile.
+# ============================================================
+
+Quando scendete dalla Prateria, il maestrale vi spinge alle spalle. A Portofoglia le vele si gonfiano una dopo l'altra, e qualcuno sul molo si mette a ridere senza motivo.
+tano: Eccolo! Lo sentite? Viene da dove deve venire! Domani si esce all'alba, e chi dorme resta a terra!
+La piazza si riempie. Ilva arriva dalla Gilda e Oride dal municipio, e ti raggiungono nello stesso momento.
+
+if {Cap1.FauceEsito} == "placata":
+	oride: I pastori l'hanno vista dal crinale. Dorme accanto alla sorgente, e il muschio è tornato azzurro. Non so come ringraziarti.
+	nilde: Domani le porto il pane. Il primo della farina nuova.
+	if {Cap1.Posizione} == "caccia":
+		ilva: In piazza avevi detto che andava abbattuta. Poi, lassù, hai fatto di testa tua.
+		ilva: Ha funzionato, quindi non ti punisco. Ma la prossima volta che cambi idea, voglio saperlo prima che lo sappia il mostro.
+	else:
+		ilva: Niente zanne e niente placche. Però le sorgenti sono pulite e ho due reclute vive. Ho chiuso contratti peggiori.
+else:
+	ilva: Contratto chiuso. Pulito, da manuale. Ferro ha già acceso la fucina.
+	oride: Le sorgenti sono salve, e ve ne siamo grati. Lasciate però che stasera qualcuno la pianga.
+	nilde: Settant'anni di primo pane. Stasera lo porto lo stesso, e lo lascio davanti alla Grotta.
+
+ilva: E adesso la cosa che hai in tasca. Tirala fuori, che la vedano tutti.
+Apri la mano. Il frammento illumina di verde le facce più vicine. Nel suo cuore gira il piccolo vento.
+ilva: Un pezzo dello Smeraldo dei Venti. Allora le voci erano vere, la Notte Verde è stata questo.
+if {Cap1.VeliaDenunciata} == true or {Cap1.SaPianoVuoto} == true:
+	ilva: E se quella donna in grigio ne cerca altri, vuol dire che ce ne sono altri.
+ilva: Deve andare alla Rocca Maestra, sotto scorta. La Gilda ha forzieri che nessuno ha mai aperto senza permesso.
+oride: Un forziere lontano, in mano a gente che non abbiamo mai visto. Quel frammento è caduto qui. Ha fatto male a noi e alla nostra Vecchia.
+oride: Il Sacrario della Fonte ha custodito cose più antiche della Gilda. Lasciatelo a chi sa che cosa ha fatto.
+ilva: Un altare e quattro candele, contro chi l'ha già fiutato fin qui? Oride, ragiona.
+oride: Ragiono. E dico che non tocca a noi due deciderlo. Lo ha tirato fuori chi lo tiene in mano.
+
+# BIVIO 1. La terza risposta compare solo se hai un patto con Velia
+# oppure una buona reputazione con la Confraternita.
+Il frammento ti scalda il palmo. Ilva tende la mano. Oride no, ma non smette di guardarti.
+- (Posi il frammento nella mano di Ilva.)
+	set {Trama.Bivio1} = "gilda"
+	set {Rep.Gilda} += 15
+	set {Rep.Villaggi} -= 3
+	ilva: Scelta da cacciatore. Parte domani con la staffetta, e viaggerà più scortato di un governatore.
+	oride: Spero che la Rocca Maestra se lo meriti. Noi, intanto, ti dobbiamo il vento. Questo non cambia.
+- (Posi il frammento nelle mani di Oride.)
+	set {Trama.Bivio1} = "villaggio"
+	set {Rep.Villaggi} += 15
+	set {Rep.Gilda} -= 5
+	oride: Lo terremo al Sacrario, davanti alla sorgente. E faremo i turni di guardia, vecchi e ragazzi.
+	if {Cap1.FauceEsito} == "placata":
+		nilde: E chi viene a prenderselo dovrà passare davanti a una vicina di casa molto grossa e molto riconoscente.
+	ilva: È un errore. Lo metto a verbale. E metto anche due dei miei a dormire davanti al tuo altare, Oride, che ti piaccia o no.
+- (Chiudi il pugno. Il frammento è promesso ad altri.) | [if {Cap1.PattoVelia} == true or {Rep.Confraternita} >= 10]
+	set {Trama.Bivio1} = "vuoto"
+	La luce verde sparisce tra le tue dita. Sulla piazza cala un silenzio diverso da quello di prima.
+	ilva: Recluta. Il frammento.
+	Non apri la mano.
+	oride: Basta così, Ilva. Ha ancora addosso il buio della Grotta. Ne riparlate domani.
+	ilva: Hai tempo fino a domattina per ricordarti chi ti ha messo in mano un compagno.
+	jump molo_vecchio
+
+# --- Epilogo per chi ha scelto Gilda o villaggio ---
+if {Cap1.PattoVelia} == true:
+	# Avevi un patto con Velia e non l'hai rispettato.
+	set {Cap1.PattoTradito} = true
+	set {Rep.Confraternita} -= 10
+	Quella notte, sul davanzale della tua finestra, trovi il Sigillo del Vuoto. Non ce l'avevi messo tu. Sotto c'è un biglietto.
+	Avevamo un accordo. Non importa. Il Vuoto ha molta pazienza, e una memoria ancora più lunga. V.
+elif {Cap1.VeliaIncontrata} == true:
+	Quella notte, dal molo vecchio, una barca grigia prende il largo senza lanterne. Nessuno a Portofoglia la conosce.
+
+La mattina dopo, alla Gilda, Ilva ti aspetta con un registro aperto e una faccia che non riesce a restare severa.
+ilva: Rango due. Da oggi firmi i contratti con il tuo nome, e Ferro ti apre la rastrelliera buona.
+[signal arg="rango_su"]
+set {Giocatore.Rango} += 1
+if {Legami.Brisa} >= 6:
+	brisa: Rango due anche io. Ilva dice che è per come ho gestito le spore. Io dico che è perché ho qualcuno che non mi lascia indietro.
+	brisa: Ovunque ti mandino adesso, io vengo. Non era una domanda.
+	set {Cap1.BrisaAlleata} = true
+elif {Legami.Brisa} >= 0:
+	brisa: Io resto al rango uno ancora per un po'. Me lo sono meritato. Però ti raggiungo, e prima di quanto pensi.
+else:
+	Brisa è alla finestra, di spalle. Ti fa un cenno senza voltarsi. Ci vorrà del tempo.
+ilva: Stanotte ha scritto il faro di ponente. Hanno visto una luce verde oltre lo stretto, e il mare là sotto bolle.
+ilva: Un frammento era qui. Gli altri sono dove il vento è più storto. Questo è un lasciapassare per il traghetto. Parti quando ti senti di partire.
+[signal arg="oggetto_chiave:lasciapassare_del_traghetto"]
+jump chiusura
+
+# --- Epilogo per chi ha scelto la Confraternita ---
+label molo_vecchio
+Di notte il molo vecchio è un pontile di assi marce dove non attracca più nessuno. Stanotte c'è una barca grigia, senza lanterne.
+velia: Sei qui. Non ne ero certa. Di solito, davanti a una piazza intera, la gente si ricorda di essere per bene.
+Le posi il frammento nel palmo. Lei non lo guarda nemmeno. Lo chiude in una scatola di pietra grigia, e la luce verde si spegne come una candela tra due dita.
+velia: Il primo. Ce ne sono altri cinque, e tu hai mani buone per trovarli.
+velia: Questo è un lasciapassare grigio. Mostralo a qualunque barcaiolo con un nastro cenere al polso, e ti porterà dove serve senza domande.
+[signal arg="oggetto_chiave:lasciapassare_grigio"]
+set {Rep.Confraternita} += 20
+set {Rep.Gilda} -= 15
+set {Rep.Villaggi} -= 10
+if {Cap1.SaQuiete} == true:
+	Mentre la barca si stacca dal molo, vedi la gabbia a poppa. Il Saltarupe è ancora lì, dritto, con gli occhi aperti. Il tuo {Cap1.StarterNome} gli ringhia finché non sparisce nel buio.
+La mattina dopo Ilva non alza la voce. È peggio.
+ilva: Il tuo rango resta dov'è. Il tuo nome resta sul registro, perché il vento è tornato e io non sono un'ingrata.
+ilva: Ma da oggi, quando parti, voglio sapere per dove. E quando torni, voglio sapere con chi hai parlato.
+brisa: Dimmi che avevi un motivo. Uno buono. Non adesso. Quando sarai capace di dirlo.
+jump chiusura
+
+label chiusura
+Dalla finestra della Gilda si vede tutto il porto. Le barche escono in fila, con le vele piene, e sopra la Prateria le pale dei mulini girano.
+Il vento è tornato a Portofoglia. Il Nonno fuma dritto, e la sua cenere finalmente va al largo.
+Ma il vento viene da ponente, e a ponente il cielo, proprio sul filo dell'orizzonte, ha una sfumatura verde.
+[signal arg="missione_fine:c1_m4:completata"]
+[signal arg="capitolo_fine:1"]
+[end_timeline]

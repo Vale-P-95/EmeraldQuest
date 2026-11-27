@@ -1,0 +1,216 @@
+{
+	"_nota": "Elenco delle missioni del capitolo 1. Il gioco lo legge per mostrare il diario delle missioni. I testi dei dialoghi stanno in dialogic/timelines/cap1/. Ogni 'esito' corrisponde al terzo pezzo del segnale missione_fine:<id>:<esito>. I nomi di oggetti, materiali e creature sono provvisori.",
+	"capitolo": 1,
+	"titolo": "Il vento che non torna",
+	"missioni": [
+		{
+			"id": "c1_m1",
+			"tipo": "principale",
+			"titolo": "Il giorno del cristallo",
+			"descrizione": "È il giorno in cui la Gilda dei Cacciatori ti affida il primo compagno.",
+			"da_chi": "ilva",
+			"luogo": "Portofoglia",
+			"timeline": ["c1_01_prologo"],
+			"obiettivi": [
+				"Raggiungi la sede della Gilda con Brisa",
+				"Scegli il tuo primo compagno"
+			],
+			"esiti": [
+				{
+					"id": "completata",
+					"descrizione": "Hai un compagno e cinque cristalli di cattura.",
+					"ricompense": ["compagno iniziale", "cristallo_cattura x5"]
+				}
+			]
+		},
+		{
+			"id": "c1_m2",
+			"tipo": "principale",
+			"titolo": "Vento storto",
+			"descrizione": "Il maestrale si è guastato: barche ferme, mulini fermi. Ilva ti manda sulla Prateria dei Venti a scoprire che cosa agita i branchi.",
+			"da_chi": "ilva",
+			"luogo": "Prateria dei Venti",
+			"timeline": ["c1_02_vento_storto", "c1_03_prateria_velia", "c1_04_assemblea"],
+			"obiettivi": [
+				"Sali alla Prateria dei Venti e raggiungi i mulini",
+				"Scopri che cosa rende aggressivi i Saltarupe",
+				"Torna da Ilva e fai rapporto",
+				"Prendi posizione all'assemblea in piazza"
+			],
+			"esiti": [
+				{
+					"id": "completata",
+					"descrizione": "La polvere viene dalla Grotta Muschiata. In piazza hai sostenuto la Gilda, il villaggio, tutti e due con una prova, oppure nessuno (variabile Cap1.Posizione).",
+					"ricompense": ["antidoto_di_salvia x1", "Cantilena della Fonte (solo se sostieni il villaggio o mostri la polvere)"]
+				}
+			]
+		},
+		{
+			"id": "c1_m3",
+			"tipo": "principale",
+			"titolo": "Nella Grotta Muschiata",
+			"descrizione": "Dentro la Grotta, Fauceverde soffia la polvere che ha fermato il vento. La Gilda la vuole abbattuta, il villaggio la vuole placata.",
+			"da_chi": "ilva",
+			"luogo": "Grotta Muschiata",
+			"timeline": ["c1_05_ferro", "c1_06_grotta_ingresso", "c1_07_grotta_brisa", "c1_08_grotta_patto", "c1_09_fauceverde_prima", "c1_10_fauceverde_dopo"],
+			"obiettivi": [
+				"Porta a Ferro 3 ciuffi di Saltarupe e 1 legno di deriva",
+				"Ritira il paramano da domatore",
+				"Apri l'ingresso della Grotta con l'abilità del tuo compagno",
+				"Raggiungi Brisa nella sala delle radici",
+				"Attraversa il lago sotterraneo",
+				"Affronta Fauceverde"
+			],
+			"esiti": [
+				{
+					"id": "abbattuta",
+					"descrizione": "Hai dato il colpo di grazia a Fauceverde.",
+					"reputazione": {"Gilda": 10, "Villaggi": -10},
+					"ricompense": ["zanna_di_fauceverde x1", "placca_di_felce x3", "muschio_antico x2", "frammento dello Smeraldo"]
+				},
+				{
+					"id": "placata",
+					"descrizione": "Le hai tolto il frammento dalla mascella senza ucciderla. Serve aver svuotato la barra di Rottura oppure conoscere la Cantilena della Fonte.",
+					"reputazione": {"Villaggi": 10, "Gilda": 2},
+					"ricompense": ["muschio_azzurro_della_vecchia x1", "placca_di_felce x1", "frammento dello Smeraldo"]
+				}
+			]
+		},
+		{
+			"id": "c1_m4",
+			"tipo": "principale",
+			"titolo": "Il primo frammento",
+			"descrizione": "Hai in mano un pezzo dello Smeraldo dei Venti. Gilda, villaggio e Confraternita lo vogliono tutti. Primo bivio della trama principale.",
+			"da_chi": "ilva",
+			"luogo": "Portofoglia",
+			"timeline": ["c1_11_frammento"],
+			"obiettivi": [
+				"Torna a Portofoglia",
+				"Decidi a chi affidare il frammento"
+			],
+			"esiti": [
+				{
+					"id": "completata",
+					"descrizione": "La scelta è salvata in Trama.Bivio1: gilda, villaggio oppure vuoto.",
+					"reputazione": {
+						"gilda": {"Gilda": 15, "Villaggi": -3},
+						"villaggio": {"Villaggi": 15, "Gilda": -5},
+						"vuoto": {"Confraternita": 20, "Gilda": -15, "Villaggi": -10}
+					},
+					"ricompense": ["rango 2 e lasciapassare del traghetto (gilda, villaggio)", "lasciapassare grigio (vuoto)"]
+				}
+			]
+		},
+		{
+			"id": "c1_s1",
+			"tipo": "secondaria",
+			"titolo": "Il mulino fermo",
+			"descrizione": "Un branco di Saltarupe ha fatto il nido negli ingranaggi del mulino di Pina.",
+			"da_chi": "pina",
+			"luogo": "Prateria dei Venti",
+			"timeline": ["c1_s1_mulino"],
+			"obiettivi": [
+				"Sali in cima al mulino e libera gli ingranaggi",
+				"Consegna il Saltarupe a Velia (solo se lo hai catturato per lei)"
+			],
+			"esiti": [
+				{
+					"id": "scacciati",
+					"descrizione": "Hai cacciato il branco con la forza.",
+					"reputazione": {"Gilda": 5},
+					"ricompense": ["120 monete", "ciuffo_di_saltarupe x4", "corno_di_saltarupe x1"]
+				},
+				{
+					"id": "spostati",
+					"descrizione": "Hai attirato il branco nel vecchio fienile con la Focaccia di semi.",
+					"reputazione": {"Villaggi": 6},
+					"ricompense": ["60 monete", "ricetta Pane del viandante", "farina a metà prezzo da Pina"]
+				},
+				{
+					"id": "venduti",
+					"descrizione": "Hai catturato il capobranco e lo hai consegnato a Velia.",
+					"reputazione": {"Confraternita": 8, "Villaggi": -5},
+					"ricompense": ["80 monete da Pina", "300 monete da Velia", "essenza_di_quiete x1"]
+				}
+			]
+		},
+		{
+			"id": "c1_s2",
+			"tipo": "secondaria",
+			"titolo": "Il compagno di Odo",
+			"descrizione": "Sasso, il Ciottolotto di Odo, è scappato verso la montagna tre notti fa.",
+			"da_chi": "odo",
+			"luogo": "Portofoglia, Grotta Muschiata",
+			"timeline": ["c1_s2_odo"],
+			"obiettivi": [
+				"Cerca Sasso nella Grotta Muschiata",
+				"Torna da Odo al molo"
+			],
+			"esiti": [
+				{
+					"id": "riportato",
+					"descrizione": "Hai ripulito Sasso dalla polvere e lo hai riportato a Odo.",
+					"reputazione": {"Villaggi": 6},
+					"ricompense": ["amo_fortunato x1"]
+				},
+				{
+					"id": "gilda",
+					"descrizione": "Hai affidato Sasso alle cure della Gilda.",
+					"reputazione": {"Gilda": 5, "Villaggi": 2},
+					"ricompense": []
+				},
+				{
+					"id": "tenuto_verita",
+					"descrizione": "Hai tenuto Sasso in squadra e lo hai detto a Odo.",
+					"reputazione": {"Villaggi": -3},
+					"ricompense": ["Ciottolotto (abilità sul campo: spaccare rocce)"]
+				},
+				{
+					"id": "tenuto_bugia",
+					"descrizione": "Hai tenuto Sasso in squadra e hai mentito a Odo (flag Cap1.OdoMentito, avrà conseguenze più avanti).",
+					"reputazione": {},
+					"ricompense": ["Ciottolotto (abilità sul campo: spaccare rocce)"]
+				}
+			]
+		},
+		{
+			"id": "c1_s3",
+			"tipo": "secondaria",
+			"titolo": "Conti in sospeso",
+			"descrizione": "Il ferro di palude destinato a Ferro arriva dimezzato. Qualcuno, nel magazzino della Gilda, tiene due registri.",
+			"da_chi": "ferro",
+			"luogo": "Portofoglia",
+			"timeline": ["c1_s3_conti"],
+			"obiettivi": [
+				"Controlla i registri nel magazzino della Gilda",
+				"Decidi che cosa fare con Malco"
+			],
+			"esiti": [
+				{
+					"id": "denunciato",
+					"descrizione": "Hai portato il registro a Ilva.",
+					"reputazione": {"Gilda": 8, "Villaggi": -3},
+					"ricompense": ["sconto del 10% alla fucina"]
+				},
+				{
+					"id": "confessato",
+					"descrizione": "Hai convinto Malco a confessare e hai garantito per lui (serve reputazione Gilda 10).",
+					"reputazione": {"Gilda": 5, "Villaggi": 4},
+					"ricompense": ["sconto del 10% alla fucina", "sconto del 10% allo spaccio della Gilda"]
+				},
+				{
+					"id": "coperto",
+					"descrizione": "Hai taciuto in cambio della promessa che le vendite finiscano.",
+					"reputazione": {"Villaggi": 5},
+					"ricompense": ["sconto del 20% allo spaccio della Gilda"]
+				},
+				{
+					"id": "ricattato",
+					"descrizione": "Ti sei fatto pagare per tacere.",
+					"reputazione": {"Villaggi": -2},
+					"ricompense": ["200 monete"]
+				}
+			]
+		}
+	]
+}

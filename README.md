@@ -21,6 +21,8 @@ Quando ci sono novità: in GitHub Desktop premi **Fetch origin** e poi **Pull**.
 | Correre | Shift | B / Cerchio |
 | Camera | Mouse (clicca per agganciarlo) oppure frecce | Stick destro |
 | Liberare il mouse | Esc | — |
+| Provare la storia (scena successiva) | T | — |
+| Avanzare nei dialoghi | Invio, Spazio, X o clic | A / Croce |
 
 ## Struttura delle cartelle
 
@@ -32,6 +34,11 @@ Quando ci sono novità: in GitHub Desktop premi **Fetch origin** e poi **Pull**.
 | `scripts/data/` | Gli "stampi" dei dati: `CreatureData`, `SkillData`, `EvolutionRule`, `Element` |
 | `data/creatures/` | Una scheda `.tres` per ogni creatura |
 | `data/skills/` | Una scheda `.tres` per ogni abilità |
+| `dialogic/` | Dialoghi e personaggi della storia (guida in `dialogic/LEGGIMI.md`) |
+| `autoload/` | Script sempre attivi: `storia.gd` collega i dialoghi al gioco |
+| `data/quests/` | L'elenco delle missioni |
+| `docs/storia/` | La storia raccontata per esteso |
+| `addons/dialogic/` | Il plugin Dialogic 2 per i dialoghi |
 
 ### Modificare una creatura senza codice
 
