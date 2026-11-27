@@ -32,6 +32,8 @@ var _spawn_position: Vector3
 @onready var _model: Node3D = $Model
 @onready var _camera_pivot: Node3D = $CameraPivot
 @onready var _spring_arm: SpringArm3D = $CameraPivot/SpringArm3D
+# Il modello 3D importato contiene un AnimationPlayer con "idle", "walk", "jump".
+@onready var _anim: AnimationPlayer = _model.find_child("AnimationPlayer", true, false)
 
 
 func _ready() -> void:
@@ -90,7 +92,10 @@ func _physics_process(delta: float) -> void:
 		var target_yaw := atan2(-direction.x, -direction.z)
 		_model.rotation.y = lerp_angle(_model.rotation.y, target_yaw, turn_speed * delta)
 
-	# 6) Rete di sicurezza: se cade fuori dalla mappa, torna al via.
+	# 6) Animazione: cammina se si muove, altrimenti sta fermo.
+	_update_animation()
+
+	# 7) Rete di sicurezza: se cade fuori dalla mappa, torna al via.
 	if global_position.y < fall_limit:
 		global_position = _spawn_position
 		velocity = Vector3.ZERO
@@ -104,3 +109,16 @@ func _rotate_camera(yaw: float, pitch: float) -> void:
 		deg_to_rad(min_pitch_deg),
 		deg_to_rad(max_pitch_deg)
 	)
+
+
+func _update_animation() -> void:
+	if _anim == null:
+		return
+	var horizontal_speed := Vector2(velocity.x, velocity.z).length()
+	var wanted := &"walk" if horizontal_speed > 0.3 else &"idle"
+	if not is_on_floor() and _anim.has_animation(&"jump"):
+		wanted = &"jump"
+	if _anim.current_animation != wanted and _anim.has_animation(wanted):
+		_anim.play(wanted, 0.15)
+	# La camminata va più veloce quando si corre.
+	_anim.speed_scale = clampf(horizontal_speed / walk_speed, 0.8, 1.8) if wanted == &"walk" else 1.0

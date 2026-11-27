@@ -1,5 +1,10 @@
-; File di configurazione del progetto Godot.
-; Si modifica comodamente da Progetto > Impostazioni progetto nell'editor.
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
 
 config_version=5
 
@@ -7,13 +12,8 @@ config_version=5
 
 config/name="EmeraldQuest"
 config/description="RPG 3D a turni con creature originali."
-run/main_scene="res://scenes/world/test_world.tscn"
+run/main_scene="res://scenes/world/prateria.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
-
-[display]
-
-window/size/viewport_width=1280
-window/size/viewport_height=720
 
 [autoload]
 
@@ -53,63 +53,69 @@ directories/dtl_directory={
 "c1_voci_portofoglia": "res://dialogic/timelines/cap1/c1_voci_portofoglia.dtl"
 }
 variables={
+"Cap1": {
+"BrisaAlleata": false,
+"BrisaCurata": false,
+"BrisaRimandata": false,
+"Cantilena": false,
+"CantilenaUsata": false,
+"ContiEsito": "",
+"ContiStato": 0,
+"FauceEsito": "",
+"FauceRotta": false,
+"HaAntidoto": false,
+"HaFocaccia": false,
+"HaMateriali": false,
+"HaSaltarupeSmanioso": false,
+"MalcoRicattato": false,
+"MulinoBugia": false,
+"MulinoEsito": "",
+"MulinoPolvere": false,
+"MulinoStato": 0,
+"OdoEsito": "",
+"OdoMentito": false,
+"OdoStato": 0,
+"PattoTradito": false,
+"PattoVelia": false,
+"PolvereMostrata": false,
+"PolvereRaccolta": false,
+"Posizione": "",
+"PromessaOride": false,
+"PromessaVelia": false,
+"SaFerroVuoto": false,
+"SaPianoVuoto": false,
+"SaQuiete": false,
+"SigilloUsato": false,
+"Starter": "",
+"StarterNome": "",
+"VeliaDenunciata": false,
+"VeliaIncontrata": false,
+"VeliaRespinta": false,
+"VeliaSospetto": false,
+"VeliaTaciuta": false
+},
 "Giocatore": {
 "Nome": "Recluta",
 "Rango": 1
 },
-"Rep": {
-"Gilda": 0,
-"Villaggi": 0,
-"Confraternita": 0
-},
 "Legami": {
 "Brisa": 0
 },
+"Rep": {
+"Confraternita": 0,
+"Gilda": 0,
+"Villaggi": 0
+},
 "Trama": {
 "Bivio1": ""
-},
-"Cap1": {
-"Starter": "",
-"StarterNome": "",
-"PromessaOride": false,
-"VeliaIncontrata": false,
-"VeliaSospetto": false,
-"PromessaVelia": false,
-"PolvereRaccolta": false,
-"PolvereMostrata": false,
-"VeliaDenunciata": false,
-"VeliaTaciuta": false,
-"Posizione": "",
-"Cantilena": false,
-"CantilenaUsata": false,
-"HaMateriali": false,
-"HaAntidoto": false,
-"BrisaCurata": false,
-"BrisaRimandata": false,
-"BrisaAlleata": false,
-"SaQuiete": false,
-"SaPianoVuoto": false,
-"SaFerroVuoto": false,
-"PattoVelia": false,
-"VeliaRespinta": false,
-"SigilloUsato": false,
-"FauceRotta": false,
-"FauceEsito": "",
-"PattoTradito": false,
-"MulinoStato": 0,
-"MulinoEsito": "",
-"MulinoPolvere": false,
-"MulinoBugia": false,
-"HaFocaccia": false,
-"HaSaltarupeSmanioso": false,
-"OdoStato": 0,
-"OdoEsito": "",
-"OdoMentito": false,
-"ContiStato": 0,
-"ContiEsito": "",
-"MalcoRicattato": false
 }
 }
+layout/style_directory={}
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
 
 [editor_plugins]
 
